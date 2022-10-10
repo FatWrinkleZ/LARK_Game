@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#ifdef __linux
+#include <unistd.h>
+#endif
 
 int PLAYING;
 
