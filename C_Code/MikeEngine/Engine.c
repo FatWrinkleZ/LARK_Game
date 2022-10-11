@@ -1,13 +1,12 @@
 #include "Engine.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 
 int PLAYING = 0;
-int UNIT_SIZE = 10;
+int UNIT_SIZE = 64;
 int WIDTH = 0, HEIGHT = 0;
 int mapX, mapY;
 char** SCREEN;
+char KEYSTROKE;
+
 int map[] = {
     1,1,1,1,1,1,1,1,
     1,0,0,1,0,1,0,1,
@@ -30,6 +29,12 @@ void INIT(Transform* entity){
     entity->rotation = 0.0f;
 }
 
+void INIT_POS(Transform* entity, Vector2 position){
+    entity->position = position;
+    entity->tag = 0;
+    entity->rotation = 0.0f;
+}
+
 void ADD_ENTITY(Transform* entity){
     numEntities++;
     ENTITIES = (Transform*)realloc(ENTITIES, sizeof(Transform)*numEntities);
@@ -38,11 +43,11 @@ void ADD_ENTITY(Transform* entity){
 }
 
 int Initialize(){
-    SCREEN = (char**)malloc(WIDTH * sizeof(char*));
-    for(int i = 0; i < WIDTH; i++){
-        SCREEN[i] = (char*)malloc(HEIGHT * sizeof(char));
-        for(int j = 0; j < HEIGHT; j++){
-            SCREEN[i][j] = ' ';
+    SCREEN = (char**)malloc(HEIGHT * sizeof(char*));
+    for(int i = 0; i < HEIGHT; i++){
+        SCREEN[i] = (char*)malloc(WIDTH * sizeof(char));
+        for(int j = 0; j < WIDTH; j++){
+            SCREEN[i][j] = '-';
         }
     }
 
@@ -60,11 +65,12 @@ float Distance(float ax, float ay, float bx, float by, float ang){
 }
 
 void CastRay(){
+    int row=0, col=0;
     int r, mx, my, mp, dof; float rx, ry, ra, xo, yo, distT;
-    ra = PLAYER->rotation - DR*30;
+    ra = PLAYER->rotation - DR*(WIDTH/2);
     if(ra < 0){ra+=2*PI;}
     if(ra>2*PI){ra-=2*PI;}
-    for(r = 0; r < 60; r++){
+    for(r = 0; r < WIDTH; r++){
         //HORIZONTAL CHECK
         dof = 0;
         float disH=1000000,hx=PLAYER->position.x, hy=PLAYER->position.y;
@@ -126,7 +132,16 @@ void CastRay(){
 
         float lineH = ((mapX * mapY)*HEIGHT)/distT;
         lineH = lineH > 320 ? 320 : lineH;
-
+        char tile = distT == disH ? '#' : '@';
+        int tL = (HEIGHT/2)+(lineH/2), bL = (HEIGHT/2)-(lineH/2);
+        for(col = 0; col < HEIGHT; col++){
+            if(col <= tL && col >= bL){
+                SCREEN[col][row]=tile;
+            }else{
+                SCREEN[col][row]='-';
+            }
+        }
+        row++;
         ra+=DR;
         if(ra < 0){ra+=2*PI;}
         if(ra>2*PI){ra-=2*PI;}
@@ -134,6 +149,7 @@ void CastRay(){
 }
 
 int Update(){
+    KEYSTROKE = 0;
     for(int i = 0; i < numEntities; i++){
         if(ENTITIES[i].OnUpdate!=NULL){
             ENTITIES[i].OnUpdate();
@@ -143,29 +159,41 @@ int Update(){
 }
 
 void RenderScreen(){
+    CastRay();
     system("clear");
-
     for(int i = 0; i < WIDTH; i ++){
-        for(int j = 0; j < HEIGHT; j++){
-            putchar(SCREEN[i][j]);
-        }
-        putchar('\n');
+        /*for(int j = 0; j < HEIGHT; j++){
+            putchar(SCREEN[j][i]);
+        }*/
+        printf("%s\r\n", SCREEN[i]);
+        //putchar('\r');
+        //putchar('\n');
     }
 }
 
-int Start(int _WIDTH, int _HEIGHT){
-    WIDTH = _WIDTH;
-    HEIGHT = _HEIGHT;
-    PLAYING = 1;
-    Initialize();
-    while(PLAYING){
-        Update();
-        RenderScreen();
-    }
+void END(){
     free(ENTITIES);
     for(int i = 0; i < WIDTH; i++){
         free(SCREEN[i]);
     }
     free(SCREEN);
+}
+
+int Start(int _WIDTH, int _HEIGHT, void (*myStart)()){
+    WIDTH = _WIDTH;
+    HEIGHT = _HEIGHT;
+    PLAYING = 1;
+    Initialize();
+    myStart();
+    while(PLAYING != 0){
+        RenderScreen();
+        KEYSTROKE = getchar();
+        if(KEYSTROKE = '0'){
+            PLAYING = 0;
+        }
+        printf("\r\nEND OF FRAME\r\n");
+        //Update();
+    }
+    END();
     return 0;
 }

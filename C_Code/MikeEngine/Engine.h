@@ -1,5 +1,8 @@
 #ifndef ENGINE_H_
 #define ENGINE_H_
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 /*#ifdef __linux
 #include <unistd.h>
 #endif*/
@@ -16,6 +19,8 @@ extern int mapX, mapY;
 extern int map[];
 
 extern char** SCREEN;
+
+extern char KEYSTROKE;
 
 typedef struct {
     float x, y;
@@ -48,5 +53,7 @@ int Update();
 
 void RenderScreen();
 
-int Start(int _WIDTH, int _HEIGHT);
+void END();
+
+int Start(int _WIDTH, int _HEIGHT, void (*myStart)());
 #endif
