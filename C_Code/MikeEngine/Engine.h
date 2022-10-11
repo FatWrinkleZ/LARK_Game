@@ -3,16 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-/*#ifdef __linux
-#include <unistd.h>
-#endif*/
 
 #define PI 3.14159f
 #define P2 PI/2
 #define P3 3*PI/2
 #define DR 0.0174533
 
-extern int PLAYING;
+extern int* PLAYING;
 extern int UNIT_SIZE;
 extern int WIDTH, HEIGHT;
 extern int mapX, mapY;
@@ -47,6 +44,8 @@ int Initialize();
 
 float Distance(float ax, float ay, float bx, float by, float ang);
 
+void SetPlaying(int var);
+
 void CastRay();
 
 int Update();
@@ -55,5 +54,5 @@ void RenderScreen();
 
 void END();
 
-int Start(int _WIDTH, int _HEIGHT, void (*myStart)());
+int Start(int _WIDTH, int _HEIGHT, void (*myStart)(), void (*OnUpdate)());
 #endif

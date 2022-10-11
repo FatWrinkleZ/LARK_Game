@@ -1,11 +1,11 @@
 #include "Engine.h"
 
-int PLAYING = 0;
+int* PLAYING = 0;
 int UNIT_SIZE = 64;
 int WIDTH = 0, HEIGHT = 0;
 int mapX, mapY;
 char** SCREEN;
-char KEYSTROKE;
+char KEYSTROKE = 1;
 
 int map[] = {
     1,1,1,1,1,1,1,1,
@@ -64,7 +64,10 @@ float Distance(float ax, float ay, float bx, float by, float ang){
     return (sqrtf((bx-ax)*(bx-ax) + (by-ay)*(by-ay)));
 }
 
+void SetPlaying(int var){*PLAYING = var;}
+
 void CastRay(){
+    printf("CASTING RAY\r\n");
     int row=0, col=0;
     int r, mx, my, mp, dof; float rx, ry, ra, xo, yo, distT;
     ra = PLAYER->rotation - DR*(WIDTH/2);
@@ -162,38 +165,40 @@ void RenderScreen(){
     CastRay();
     system("clear");
     for(int i = 0; i < WIDTH; i ++){
-        /*for(int j = 0; j < HEIGHT; j++){
+        for(int j = 0; j < HEIGHT; j++){
             putchar(SCREEN[j][i]);
-        }*/
-        printf("%s\r\n", SCREEN[i]);
-        //putchar('\r');
-        //putchar('\n');
+        }
+        //printf("%s\r\n", SCREEN[i]);
+        putchar('\r');
+        putchar('\n');
     }
+    printf("\r\nNEW FRAME\r\n");
+    printf("PLAYER (%f, %f) => %f rad\r\n", PLAYER->position.x, PLAYER->position.y, PLAYER->rotation);
 }
 
 void END(){
-    free(ENTITIES);
-    for(int i = 0; i < WIDTH; i++){
+    for(int i = 0; i < HEIGHT; i++){
         free(SCREEN[i]);
     }
+    free(ENTITIES);
     free(SCREEN);
 }
 
-int Start(int _WIDTH, int _HEIGHT, void (*myStart)()){
+int Start(int _WIDTH, int _HEIGHT, void (*myStart)(), void (*OnUpdate)()){
     WIDTH = _WIDTH;
     HEIGHT = _HEIGHT;
-    PLAYING = 1;
+    //PLAYING = 1;
     Initialize();
     myStart();
-    while(PLAYING != 0){
+    while(*PLAYING != 0){
         RenderScreen();
-        KEYSTROKE = getchar();
-        if(KEYSTROKE = '0'){
-            PLAYING = 0;
-        }
-        printf("\r\nEND OF FRAME\r\n");
-        //Update();
+        //PLAYING = getchar()!='0';
+        Update();
+        OnUpdate();
+        //printf("\r\nEND OF FRAME\r\n");
     }
+    system("/bin/stty cooked");
+    printf("\nFINISHED\n");
     END();
     return 0;
 }

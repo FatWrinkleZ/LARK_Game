@@ -8,6 +8,12 @@ enum TAGS{
     WALL
 };
 
+int playing = 1;
+
+void myUpdate(){
+
+}
+
 void myStart(){
     PLAYER->position.x = 4;
     PLAYER->position.y = 4;
@@ -16,9 +22,10 @@ void myStart(){
 }
 
 int main(){
+    PLAYING = &playing;
     //printf("Hello world\n");
     system("/bin/stty raw");
-    Start(60, 30, &myStart);
+    Start(60, 30, &myStart, &myUpdate);
     system("/bin/stty cooked");
     return 0;
 }

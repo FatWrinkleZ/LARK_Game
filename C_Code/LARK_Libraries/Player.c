@@ -8,7 +8,8 @@ float movementSpeed = 1.0f;
 float rotateSpeed = 3.0f;
 
 void OnPlayerUpdate(){
-    switch(KEYSTROKE)
+    char keystroke = getchar();
+    switch(keystroke)
     {
     case LEFT:
         PLAYER->rotation -= DR * rotateSpeed;
@@ -25,7 +26,7 @@ void OnPlayerUpdate(){
         PLAYER->position.y -= sinf(PLAYER->rotation) * movementSpeed;
         break;
     case '0':
-        PLAYING = 0;
+        SetPlaying(0);
         break;
     default:
         break;
