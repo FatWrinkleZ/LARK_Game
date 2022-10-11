@@ -7,20 +7,23 @@ int mapX, mapY;
 char** SCREEN;
 char KEYSTROKE = 1;
 
-int map[] = {
-    1,1,1,1,1,1,1,1,
-    1,0,0,1,0,1,0,1,
-    1,0,0,1,0,1,0,1,
-    1,0,0,1,0,1,0,1,
-    1,0,0,0,0,0,0,1,
-    1,0,0,1,0,1,0,1,
-    1,0,0,1,0,1,0,1,
-    1,1,1,1,1,1,1,1,
-};
+int map[8][8]={
+    {1,1,1,1,1,1,1,1},
+    {1,0,0,1,0,1,0,1},
+    {1,0,0,1,0,1,0,1},
+    {1,0,0,1,0,1,0,1},
+    {1,0,0,0,0,0,0,1},
+    {1,0,0,1,0,1,0,1},
+    {1,0,0,1,0,1,0,1},
+    {1,1,1,1,1,1,1,1}};
 
 Transform* ENTITIES;
 int numEntities = 0;
 Transform* PLAYER;
+
+float FixAng(float ang){
+    if(ang>2*PI){ ang-=2*PI;} if(ang<0){ ang+=2*PI;} return ang;
+}
 
 void INIT(Transform* entity){
     entity->position.x = 0;
@@ -67,90 +70,7 @@ float Distance(float ax, float ay, float bx, float by, float ang){
 void SetPlaying(int var){*PLAYING = var;}
 
 void CastRay(){
-    //printf("CASTING RAY\r\n");
-    int row=0, col=0;
-    int r, mx, my, mp, dof; float rx, ry, ra, xo, yo, distT;
-    ra = PLAYER->rotation - DR*(WIDTH/2);
-    if(ra < 0){ra+=2*PI;}
-    if(ra>2*PI){ra-=2*PI;}
-    for(r = 0; r < WIDTH; r++){
-        //HORIZONTAL CHECK
-        dof = 0;
-        float disH=1000000,hx=PLAYER->position.x, hy=PLAYER->position.y;
-        float aTan = -1/tanf(ra);
-        if(ra > PI){
-            ry = (((int)PLAYER->position.y>>6)<<6)-0.0001f; 
-            rx = (PLAYER->position.y-ry)*aTan;
-            yo=-UNIT_SIZE;
-            xo = -yo*aTan;
-        }
-        if(ra < PI){
-            ry = (((int)PLAYER->position.y>>6)<<6)+UNIT_SIZE; 
-            rx = (PLAYER->position.y-ry)*aTan;
-            yo=UNIT_SIZE;
-            xo = -yo*aTan;
-        }
-        if(ra==0 || ra == PI){
-            rx=PLAYER->position.x;
-            ry = PLAYER->position.y;
-            dof = 8;
-        }
-        while(dof < 8){
-            mx=(int)(rx)>>6;
-            my=(int)(r)>>6;
-            mp = my*mapX+mx;
-            if(mp > 0 && mp<mapX*mapY && map[mp]==1){hx = rx; hy = ry; disH = Distance(PLAYER->position.x, PLAYER->position.y, hx, hy, ra);dof = 8;}
-            else{rx + xo; ry + yo; dof+=1;}
-        }
-        //VERTICAL LINES
-        dof = 0;
-        float disV=1000000,vx=PLAYER->position.x, vy=PLAYER->position.y;
-        float nTan = -tanf(ra);
-        if(ra > P2 && ra < P3){
-            rx = (((int)PLAYER->position.x>>6)<<6)-0.0001f; 
-            ry = (PLAYER->position.x-rx)*nTan;
-            xo=-UNIT_SIZE;
-            yo = -xo*nTan;
-        }
-        if(ra < P2 || ra > P3){
-            rx = (((int)PLAYER->position.x>>6)<<6)+UNIT_SIZE; 
-            ry = (PLAYER->position.x-rx)*nTan;
-            xo=UNIT_SIZE;
-            yo = -xo*nTan;
-        }
-        if(ra==0 || ra == PI){
-            ry=PLAYER->position.y;
-            rx = PLAYER->position.x;
-            dof = 8;
-        }
-        while(dof < 8){
-            mx=(int)(rx)>>6;
-            my=(int)(r)>>6;
-            mp = my*mapX+mx;
-            if(mp>0 && mp<mapX*mapY && map[mp]==1){vx = rx; vy = ry; disV = Distance(PLAYER->position.x, PLAYER->position.y, hx, hy, ra); dof = 8;}
-            else{rx + xo; ry + yo; dof+=1;}
-        }
-        char tile = '-';
-        if(disV<disH){rx=vx; ry=vy; distT = disV; tile = '#';}
-        if(disV>disH){rx=hx; ry=hy; distT = disH; tile = '@';}
-
-        float lineH = (((mapX * mapY)*HEIGHT)/distT);
-        lineH = lineH > HEIGHT ? HEIGHT : lineH;
-        float tL = ((HEIGHT/2)+(lineH/2)), bL = ((HEIGHT/2)-(lineH/2));
-        for(col = 0; col < HEIGHT; col++){
-            if(col <= tL && col >= bL || col == HEIGHT/2){
-                SCREEN[row][col]=tile;
-            }else{
-                SCREEN[row][col]='-';
-            }
-        }
-        printf("%d ", distT);
-        row++;
-        ra+=DR;
-        if(ra < 0){ra+=2*PI;}
-        if(ra>2*PI){ra-=2*PI;}
-    }
-    printf("\r\n");
+    float px = PLAYER->position.x, py = PLAYER->position.y;             
 }
 
 int Update(){

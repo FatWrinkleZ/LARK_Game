@@ -13,7 +13,7 @@ extern int* PLAYING;
 extern int UNIT_SIZE;
 extern int WIDTH, HEIGHT;
 extern int mapX, mapY;
-extern int map[];
+extern int map[8][8];
 
 extern char** SCREEN;
 
@@ -35,6 +35,8 @@ typedef struct{
 extern Transform* ENTITIES;
 extern int numEntities;
 extern Transform* PLAYER;
+
+float FixAng(float ang);
 
 void INIT(Transform* entity);
 
