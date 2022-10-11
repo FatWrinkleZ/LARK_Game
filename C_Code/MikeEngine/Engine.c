@@ -43,10 +43,10 @@ void ADD_ENTITY(Transform* entity){
 }
 
 int Initialize(){
-    SCREEN = (char**)malloc(HEIGHT * sizeof(char*));
-    for(int i = 0; i < HEIGHT; i++){
-        SCREEN[i] = (char*)malloc(WIDTH * sizeof(char));
-        for(int j = 0; j < WIDTH; j++){
+    SCREEN = (char**)malloc(WIDTH * sizeof(char*));
+    for(int i = 0; i < WIDTH; i++){
+        SCREEN[i] = (char*)malloc(HEIGHT * sizeof(char));
+        for(int j = 0; j < HEIGHT; j++){
             SCREEN[i][j] = '-';
         }
     }
@@ -61,13 +61,13 @@ int Initialize(){
 }
 
 float Distance(float ax, float ay, float bx, float by, float ang){
-    return (sqrtf((bx-ax)*(bx-ax) + (by-ay)*(by-ay)));
+    return cosf(ang)*(bx-ax)-sinf(ang)*(by-ay);;
 }
 
 void SetPlaying(int var){*PLAYING = var;}
 
 void CastRay(){
-    printf("CASTING RAY\r\n");
+    //printf("CASTING RAY\r\n");
     int row=0, col=0;
     int r, mx, my, mp, dof; float rx, ry, ra, xo, yo, distT;
     ra = PLAYER->rotation - DR*(WIDTH/2);
@@ -130,25 +130,27 @@ void CastRay(){
             if(mp>0 && mp<mapX*mapY && map[mp]==1){vx = rx; vy = ry; disV = Distance(PLAYER->position.x, PLAYER->position.y, hx, hy, ra); dof = 8;}
             else{rx + xo; ry + yo; dof+=1;}
         }
-        if(disV<disH){rx=vx; ry=vy; distT = disV;}
-        if(disV>disH){rx=hx; ry=hy; distT = disH;}
+        char tile = '-';
+        if(disV<disH){rx=vx; ry=vy; distT = disV; tile = '#';}
+        if(disV>disH){rx=hx; ry=hy; distT = disH; tile = '@';}
 
-        float lineH = ((mapX * mapY)*HEIGHT)/distT;
-        lineH = lineH > 320 ? 320 : lineH;
-        char tile = distT == disH ? '#' : '@';
-        int tL = (HEIGHT/2)+(lineH/2), bL = (HEIGHT/2)-(lineH/2);
+        float lineH = (((mapX * mapY)*HEIGHT)/distT);
+        lineH = lineH > HEIGHT ? HEIGHT : lineH;
+        float tL = ((HEIGHT/2)+(lineH/2)), bL = ((HEIGHT/2)-(lineH/2));
         for(col = 0; col < HEIGHT; col++){
-            if(col <= tL && col >= bL){
-                SCREEN[col][row]=tile;
+            if(col <= tL && col >= bL || col == HEIGHT/2){
+                SCREEN[row][col]=tile;
             }else{
-                SCREEN[col][row]='-';
+                SCREEN[row][col]='-';
             }
         }
+        printf("%d ", distT);
         row++;
         ra+=DR;
         if(ra < 0){ra+=2*PI;}
         if(ra>2*PI){ra-=2*PI;}
     }
+    printf("\r\n");
 }
 
 int Update(){
@@ -162,10 +164,10 @@ int Update(){
 }
 
 void RenderScreen(){
-    CastRay();
     system("clear");
-    for(int i = 0; i < WIDTH; i ++){
-        for(int j = 0; j < HEIGHT; j++){
+    CastRay();
+    for(int i = 0; i < HEIGHT; i ++){
+        for(int j = 0; j < WIDTH; j++){
             putchar(SCREEN[j][i]);
         }
         //printf("%s\r\n", SCREEN[i]);
