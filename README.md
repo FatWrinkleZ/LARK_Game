@@ -1,6 +1,7 @@
 # LARK_Game
 L.A.R.K Game for Intro To Unix
 
+![Current Progress on the renderer 10/11/2022](./Screenshots/screenshot_01.png)
 
 10/11/2022
   Got the base raycaster to work (sorta). Used this awesome article (https://lodev.org/cgtutor/raycasting.html) to help. Still gotta do some tweaks
