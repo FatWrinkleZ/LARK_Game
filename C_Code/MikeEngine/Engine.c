@@ -91,8 +91,13 @@ float absolute(float x){
 }
 
 void CastRay(){
+    for(int i = 0; i < 24; i ++){
+        for(int j = 0; j < 24; j++){
+            map[i][j] = map[i][j]!=0 ? 1 : 0;
+        }
+    }
     float px = PLAYER->position.x, py = PLAYER->position.y;
-    float pangle = (PLAYER->rotation - (DR*30));
+    float pangle = ((PLAYER->rotation) - (DR*30))-PI/2;
     for(int x = 0; x < WIDTH; x++){
         int mapx = (int)px;
         int mapy = (int)py;
@@ -118,7 +123,7 @@ void CastRay(){
             stepY = 1;
             sideDistY = (mapy + 1.0f - py)*deltaDistY;
         }
-        char c = '_';
+        char c = ' ';
         while(hit == 0){
             if(sideDistX < sideDistY){
                 sideDistX += deltaDistX;
@@ -133,6 +138,7 @@ void CastRay(){
             }
             if(map[mapx][mapy]!=0){
                 hit = 1;
+                map[mapx][mapy]=2;
             }
         }
         float perpWallDist = (side == 0) ? (sideDistX - deltaDistX) : sideDistY-deltaDistY;
@@ -146,10 +152,10 @@ void CastRay(){
             if(h >= drawStart && h <= drawEnd){
                 SCREEN[x][h] = c;
             }else{
-                SCREEN[x][h] = '_';
+                SCREEN[x][h] = ' ';
             }
         }
-        pangle+=DR;
+        pangle=FixAng(pangle + DR);
     }             
 }
 
@@ -176,21 +182,28 @@ void RenderScreen(){
     }
     printf("\r\nNEW FRAME\r\n");
     printf("PLAYER (%f, %f) => %f rad => %f degrees\r\n", PLAYER->position.x, PLAYER->position.y, PLAYER->rotation, PLAYER->rotation * 180/PI);
-    for(int i = 0; i < 24; i++){
-        for(int j = 23; j >= 0; j--){
-            if(i == (int)PLAYER->position.x && j == (int)PLAYER->position.x){
+    for(int i = 23; i >= 0; i--){
+        for(int j = 0; j < 24 ; j++){
+            if(i == (int)PLAYER->position.x && j == (int)PLAYER->position.y){
                 float rot = PLAYER->rotation * 180/PI;
                 if(rot >= 315 || rot <= 45){
-                    putchar('>');
-                }else if(rot > 45 && rot <= 135){
-                    putchar('^');
-                }else if(rot > 135 && rot <= 225){
                     putchar('<');
-                }else{
+                }else if(rot > 45 && rot <= 135){
                     putchar('v');
+                }else if(rot > 135 && rot <= 225){
+                    putchar('>');
+                }else{
+                    putchar('^');
                 }
             }else{
-                putchar(map[i][j] == 0 ? ' ' : '#');
+                if(map[i][j] != 0){
+                    printf("%s", map[i][j] == 2 ? KGRN : KNRM);
+                    putchar('#');
+                    printf("%s", KNRM);
+                }else{
+                    putchar(' ');
+                }
+                //putchar(map[i][j] == 0 ? ' ' : '#');
             }
         }
         printf("\r\n");

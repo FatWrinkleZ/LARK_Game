@@ -8,6 +8,14 @@
 #define P2 PI/2
 #define P3 3*PI/2
 #define DR 0.0174533
+#define KNRM  "\x1B[0m"
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KYEL  "\x1B[33m"
+#define KBLU  "\x1B[34m"
+#define KMAG  "\x1B[35m"
+#define KCYN  "\x1B[36m"
+#define KWHT  "\x1B[37m"
 
 extern int* PLAYING;
 extern int UNIT_SIZE;

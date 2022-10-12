@@ -12,18 +12,18 @@ void OnPlayerUpdate(){
     switch(keystroke)
     {
     case LEFT:
-        PLAYER->rotation -= DR * rotateSpeed;
-        break;
-    case RIGHT:
         PLAYER->rotation += DR * rotateSpeed;
         break;
+    case RIGHT:
+        PLAYER->rotation -= DR * rotateSpeed;
+        break;
     case FORWARD:
-        PLAYER->position.x += cosf(PLAYER->rotation) * movementSpeed / UNIT_SIZE;
-        PLAYER->position.y += sinf(PLAYER->rotation) * movementSpeed / UNIT_SIZE;
+        PLAYER->position.y -= cosf(PLAYER->rotation) * movementSpeed / UNIT_SIZE;
+        PLAYER->position.x += sinf(PLAYER->rotation) * movementSpeed / UNIT_SIZE;
         break;
     case BACK:
-        PLAYER->position.x -= cosf(PLAYER->rotation) * movementSpeed / UNIT_SIZE;
-        PLAYER->position.y -= sinf(PLAYER->rotation) * movementSpeed / UNIT_SIZE;
+        PLAYER->position.y += cosf(PLAYER->rotation) * movementSpeed / UNIT_SIZE;
+        PLAYER->position.x -= sinf(PLAYER->rotation) * movementSpeed / UNIT_SIZE;
         break;
     case '0':
         SetPlaying(0);
