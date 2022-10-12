@@ -92,12 +92,12 @@ float absolute(float x){
 
 void CastRay(){
     float px = PLAYER->position.x, py = PLAYER->position.y;
-    float pangle = PLAYER->rotation - PI/6;
+    float pangle = (PLAYER->rotation - (DR*30));
     for(int x = 0; x < WIDTH; x++){
         int mapx = (int)px;
         int mapy = (int)py;
         float sideDistX, sideDistY;
-        float cameraX = 2 * x / 60-1;
+        float cameraX = 2 * x / WIDTH-1;
         float rayDirX = cosf(pangle) + 0 * cameraX;
         float rayDirY = sinf(pangle) + 0.66f * cameraX;
         float deltaDistX = (rayDirX == 0) ? 1e30 : absolute(1.0f / rayDirX);
@@ -124,7 +124,7 @@ void CastRay(){
                 sideDistX += deltaDistX;
                 mapx += stepX;
                 side = 0;
-                c = '@';
+                c = '%';
             }else{
                 sideDistY += deltaDistY;
                 mapy+=stepY;
@@ -166,7 +166,7 @@ int Update(){
 void RenderScreen(){
     system("clear");
     CastRay();
-    for(int i = 0; i < HEIGHT; i ++){
+    for(int i = HEIGHT-1; i >= 0; i--){
         for(int j = WIDTH-1; j >= 0; j--){
             putchar(SCREEN[j][i]);
         }
@@ -177,7 +177,7 @@ void RenderScreen(){
     printf("\r\nNEW FRAME\r\n");
     printf("PLAYER (%f, %f) => %f rad => %f degrees\r\n", PLAYER->position.x, PLAYER->position.y, PLAYER->rotation, PLAYER->rotation * 180/PI);
     for(int i = 0; i < 24; i++){
-        for(int j = 0; j < 24; j++){
+        for(int j = 23; j >= 0; j--){
             if(i == (int)PLAYER->position.x && j == (int)PLAYER->position.x){
                 float rot = PLAYER->rotation * 180/PI;
                 if(rot >= 315 || rot <= 45){

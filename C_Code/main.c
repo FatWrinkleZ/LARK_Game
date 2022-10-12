@@ -18,7 +18,7 @@ void myStart(){
     PLAYER->position.x = 4;
     PLAYER->position.y = 4;
     PLAYER->OnUpdate = (&OnPlayerUpdate);
-    PLAYER->rotation = DR*45;
+    PLAYER->rotation = PI/2;
 }
 
 int main(){

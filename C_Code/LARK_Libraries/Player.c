@@ -12,10 +12,10 @@ void OnPlayerUpdate(){
     switch(keystroke)
     {
     case LEFT:
-        PLAYER->rotation += DR * rotateSpeed;
+        PLAYER->rotation -= DR * rotateSpeed;
         break;
     case RIGHT:
-        PLAYER->rotation -= DR * rotateSpeed;
+        PLAYER->rotation += DR * rotateSpeed;
         break;
     case FORWARD:
         PLAYER->position.x += cosf(PLAYER->rotation) * movementSpeed / UNIT_SIZE;
@@ -32,5 +32,6 @@ void OnPlayerUpdate(){
         break;
     }
     PLAYER->rotation = FixAng(PLAYER->rotation);
+
 
 }
