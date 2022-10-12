@@ -13,7 +13,7 @@ extern int* PLAYING;
 extern int UNIT_SIZE;
 extern int WIDTH, HEIGHT;
 extern int mapX, mapY;
-extern int map[8][8];
+extern int map[24][24];
 
 extern char** SCREEN;
 
@@ -47,6 +47,8 @@ int Initialize();
 float Distance(float ax, float ay, float bx, float by, float ang);
 
 void SetPlaying(int var);
+
+float absolute(float x);
 
 void CastRay();
 
