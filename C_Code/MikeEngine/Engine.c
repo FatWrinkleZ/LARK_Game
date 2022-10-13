@@ -6,6 +6,7 @@ int WIDTH = 0, HEIGHT = 0;
 int mapX, mapY;
 char** SCREEN;
 char KEYSTROKE = 1;
+int FOV = 60;
 
 int map[24][24]={
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -97,7 +98,7 @@ void CastRay(){
         }
     }
     float px = PLAYER->position.x, py = PLAYER->position.y;
-    float pangle = ((PLAYER->rotation) - (DR*30))-PI/2;
+    float pangle = ((PLAYER->rotation) - (FOV/2.0f)*PI/180)-(PI/2);
     for(int x = 0; x < WIDTH; x++){
         int mapx = (int)px;
         int mapy = (int)py;
@@ -129,7 +130,7 @@ void CastRay(){
                 sideDistX += deltaDistX;
                 mapx += stepX;
                 side = 0;
-                c = '%';
+                c = '+';
             }else{
                 sideDistY += deltaDistY;
                 mapy+=stepY;
@@ -155,7 +156,7 @@ void CastRay(){
                 SCREEN[x][h] = ' ';
             }
         }
-        pangle=FixAng(pangle + DR);
+        pangle=FixAng(pangle + PI/180.0f);
     }             
 }
 
@@ -183,17 +184,17 @@ void RenderScreen(){
     printf("\r\nNEW FRAME\r\n");
     printf("PLAYER (%f, %f) => %f rad => %f degrees\r\n", PLAYER->position.x, PLAYER->position.y, PLAYER->rotation, PLAYER->rotation * 180/PI);
     for(int i = 23; i >= 0; i--){
-        for(int j = 0; j < 24 ; j++){
+        for(int j = 23; j >= 0 ; j--){
             if(i == (int)PLAYER->position.x && j == (int)PLAYER->position.y){
                 float rot = PLAYER->rotation * 180/PI;
                 if(rot >= 315 || rot <= 45){
-                    putchar('<');
-                }else if(rot > 45 && rot <= 135){
-                    putchar('v');
-                }else if(rot > 135 && rot <= 225){
                     putchar('>');
-                }else{
+                }else if(rot > 45 && rot <= 135){
                     putchar('^');
+                }else if(rot > 135 && rot <= 225){
+                    putchar('<');
+                }else{
+                    putchar('v');
                 }
             }else{
                 if(map[i][j] != 0){

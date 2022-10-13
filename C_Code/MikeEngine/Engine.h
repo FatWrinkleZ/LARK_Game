@@ -22,6 +22,7 @@ extern int UNIT_SIZE;
 extern int WIDTH, HEIGHT;
 extern int mapX, mapY;
 extern int map[24][24];
+extern int FOV;
 
 extern char** SCREEN;
 
