@@ -1,6 +1,7 @@
 # LARK_Game
 L.A.R.K Game for Intro To Unix
 
+YOUTUBE VIDEO
 [![Youtube Video showing it in action 10/13/2022](http://img.youtube.com/vi/KHE89-zGO7M/0.jpg)](https://youtu.be/KHE89-zGO7M "LARK_GAME ASCII Raycaster Test")
 
 
