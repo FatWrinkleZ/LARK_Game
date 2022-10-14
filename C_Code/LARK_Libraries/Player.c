@@ -6,6 +6,12 @@
 
 float movementSpeed = 5.0f;
 float rotateSpeed = 3.0f;
+bool last_line_mode = false;
+
+
+void ProcessCommand(char command[32]){
+
+}
 
 void OnPlayerUpdate(){
     char keystroke = getchar();
@@ -25,13 +31,20 @@ void OnPlayerUpdate(){
         PLAYER->position.y += cosf(PLAYER->rotation) * movementSpeed / UNIT_SIZE;
         PLAYER->position.x -= sinf(PLAYER->rotation) * movementSpeed / UNIT_SIZE;
         break;
+    case ':':
+        last_line_mode = true;
+    break;
     case '0':
         SetPlaying(0);
         break;
     default:
         break;
     }
+    if(last_line_mode){
+        system("/bin/stty cooked");
+        char command[32];
+        scanf("%[^\n]", command);
+        system("/bin/stty raw");
+    }
     PLAYER->rotation = FixAng(PLAYER->rotation);
-
-
 }
