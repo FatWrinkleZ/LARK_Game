@@ -1,5 +1,8 @@
 #ifndef ENGINE_H_
 #define ENGINE_H_
+#define bool short
+#define true 1
+#define false 0
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -18,7 +21,7 @@
 #define KCYN  "\x1B[36m"
 #define KWHT  "\x1B[37m"
 
-extern int* PLAYING;
+extern bool* PLAYING;
 extern int UNIT_SIZE;
 extern int WIDTH, HEIGHT;
 extern int mapX, mapY;
@@ -40,6 +43,7 @@ typedef struct{
     int tag;
     int instanceID;
     float rotation;
+    char sprite;
 }Transform;
 
 extern Transform* ENTITIES;

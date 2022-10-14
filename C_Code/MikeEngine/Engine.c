@@ -1,7 +1,7 @@
 #include "Engine.h"
 
-int* PLAYING = 0;
-int UNIT_SIZE = 64;
+bool* PLAYING = 0;
+int UNIT_SIZE = 4;
 int WIDTH = 0, HEIGHT = 0;
 int mapX, mapY;
 char** SCREEN;
@@ -93,11 +93,22 @@ float absolute(float x){
 
 void Process_Top_Down(){
     float px = PLAYER->position.x, py = PLAYER->position.y;
+    float offsetX = WIDTH/2, offsetY = HEIGHT/2;
     int maxCamX = (int)(px + WIDTH/2), maxCamY = (int)(py + (HEIGHT/2));
     int minCamx = (int)(px - WIDTH/2), minCamy = (int)(py - (HEIGHT/2));
+    printf("SCREEN TO WORLD COORDS => MAX(%d, %d), MIN(%d, %d)\r\n", maxCamX, maxCamY, minCamx, minCamy);
     for(int i = 0; i < WIDTH; i++){
         for(int j = 0; j < HEIGHT; j++){
-
+            int mapx=(px-offsetX) + (float)i, mapy=(py-offsetY)+(float)j;
+            if(mapx < 0||mapy < 0 || mapx > 23 || mapy > 23){
+                SCREEN[i][j] = '#';
+                continue;
+            }
+            if(map[mapx][mapy]!=0){
+                SCREEN[i][j] = '#';
+                continue;
+            }
+            SCREEN[i][j] = ' ';
         }
     }
 }
@@ -215,15 +226,26 @@ void renderMinimap(){
 void RenderScreen(){
     system("clear");
     //CastRay();
-    for(int i = HEIGHT-1; i >= 0; i--){
-        for(int j = WIDTH-1; j >= 0; j--){
-            putchar(SCREEN[j][i]);
+    Process_Top_Down();
+    for(int e = 0; e < numEntities; e++){
+        int mapToScreenPosX = PLAYER->position.x - ENTITIES[e].position.x;
+        int mapToScreenPosY = PLAYER->position.y - ENTITIES[e].position.y;
+        if(mapToScreenPosX < 0 || mapToScreenPosX >= WIDTH || mapToScreenPosY < 0 || mapToScreenPosY >= HEIGHT){
+            continue;
+        }
+        SCREEN[(int)ENTITIES[e].position.x][(int)ENTITIES[e].position.y] = ENTITIES[e].sprite;
+    }
+    for(int i = HEIGHT; i >= 0; i--){
+        for(int j = 0; j <WIDTH; j++){
+            for(int e = 0; e < numEntities; e++){
+                putchar(SCREEN[j][i]);
+            }
         }
         //printf("%s\r\n", SCREEN[i]);
         putchar('\r');
         putchar('\n');
     }
-    printf("\r\nNEW FRAME\r\n");
+    //printf("\r\nNEW FRAME\r\n");
 }
 
 void END(){
