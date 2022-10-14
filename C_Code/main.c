@@ -4,8 +4,8 @@
 enum TAGS{
     DEFAULT,
     PLAYER_TAG,
-    ITEM,
-    WALL
+    KEY,
+    DOOR,
 };
 
 int playing = 1;
@@ -19,6 +19,7 @@ void myStart(){
     PLAYER->position.y = 4;
     PLAYER->OnUpdate = (&OnPlayerUpdate);
     PLAYER->rotation = PI/2;
+    PLAYER->tag = PLAYER_TAG;
 }
 
 int main(){

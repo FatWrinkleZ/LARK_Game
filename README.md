@@ -1,11 +1,9 @@
 # LARK_Game
 L.A.R.K Game for Intro To Unix
 
-YOUTUBE VIDEO
-[![Youtube Video showing it in action 10/13/2022](http://img.youtube.com/vi/KHE89-zGO7M/0.jpg)](https://youtu.be/KHE89-zGO7M "LARK_GAME ASCII Raycaster Test")
 
-
-![Current Progress on the renderer 10/11/2022](./Screenshots/screenshot_01.png)
+10/14/2022
+  Scrapped the FPS aspect of the game. After so much development, I realized that just because it was cool, did not mean that it would play wells as a game. The remnants will still stay in the code, but... they will not be used. (https://youtu.be/KHE89-zGO7M) here is a youtube video in case you want to see how it looked before.
 
 10/11/2022
   Got the base raycaster to work (sorta). Used this awesome article (https://lodev.org/cgtutor/raycasting.html) to help. Still gotta do some tweaks

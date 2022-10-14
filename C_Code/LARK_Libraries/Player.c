@@ -10,7 +10,9 @@ bool last_line_mode = false;
 
 
 void ProcessCommand(char command[32]){
-
+    char* cmd;
+    sscanf("%s ", cmd);
+    
 }
 
 void OnPlayerUpdate(){
@@ -44,6 +46,7 @@ void OnPlayerUpdate(){
         system("/bin/stty cooked");
         char command[32];
         scanf("%[^\n]", command);
+        ProcessCommand(command);
         system("/bin/stty raw");
     }
     PLAYER->rotation = FixAng(PLAYER->rotation);

@@ -91,6 +91,17 @@ float absolute(float x){
     return x > 0 ? x : x*-1;
 }
 
+void Process_Top_Down(){
+    float px = PLAYER->position.x, py = PLAYER->position.y;
+    int maxCamX = (int)(px + WIDTH/2), maxCamY = (int)(py + (HEIGHT/2));
+    int minCamx = (int)(px - WIDTH/2), minCamy = (int)(py - (HEIGHT/2));
+    for(int i = 0; i < WIDTH; i++){
+        for(int j = 0; j < HEIGHT; j++){
+
+        }
+    }
+}
+
 void CastRay(){
     for(int i = 0; i < 24; i ++){
         for(int j = 0; j < 24; j++){
@@ -170,18 +181,7 @@ int Update(){
     return 0;
 }
 
-void RenderScreen(){
-    system("clear");
-    CastRay();
-    for(int i = HEIGHT-1; i >= 0; i--){
-        for(int j = WIDTH-1; j >= 0; j--){
-            putchar(SCREEN[j][i]);
-        }
-        //printf("%s\r\n", SCREEN[i]);
-        putchar('\r');
-        putchar('\n');
-    }
-    printf("\r\nNEW FRAME\r\n");
+void renderMinimap(){
     printf("PLAYER (%f, %f) => %f rad => %f degrees\r\n", PLAYER->position.x, PLAYER->position.y, PLAYER->rotation, PLAYER->rotation * 180/PI);
     for(int i = 23; i >= 0; i--){
         for(int j = 23; j >= 0 ; j--){
@@ -209,6 +209,21 @@ void RenderScreen(){
         }
         printf("\r\n");
     }
+
+}
+
+void RenderScreen(){
+    system("clear");
+    //CastRay();
+    for(int i = HEIGHT-1; i >= 0; i--){
+        for(int j = WIDTH-1; j >= 0; j--){
+            putchar(SCREEN[j][i]);
+        }
+        //printf("%s\r\n", SCREEN[i]);
+        putchar('\r');
+        putchar('\n');
+    }
+    printf("\r\nNEW FRAME\r\n");
 }
 
 void END(){

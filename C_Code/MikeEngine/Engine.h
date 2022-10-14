@@ -46,27 +46,45 @@ extern Transform* ENTITIES;
 extern int numEntities;
 extern Transform* PLAYER;
 
+//LEGACY FPS CODE [makes bounds of an angle to that of the unit circle (i.e: 0 -> 2PI)]
 float FixAng(float ang);
 
+//Function that Initializes an Transform with default values. Think of it like a constructor.
 void INIT(Transform* entity);
 
+//Adds the Transform to the "master list" of Transform so thats it's OnUpdate void pointer can be called every Update
 void ADD_ENTITY(Transform* entity);
 
+//Allocates a base amount of memory to all the pointers, sets up the screen, player, and entities
 int Initialize();
 
+//LEGACY FPS CODE [standard distance function based on angle rather than pythagorean theorem]
 float Distance(float ax, float ay, float bx, float by, float ang);
 
+//A way to modify the PLAYING bool via function
 void SetPlaying(int var);
 
+//Gets the absolute value for floats since math.h does not support it
 float absolute(float x);
 
+//Processes the top-down window for the screen
+void Process_Top_Down();
+
+//LEGACY FPS CODE [shoots a calculated amount of rays based on the FOV global variable]
 void CastRay();
 
+//Calls the update function for every Transform in the master-list (ENTITIES)
 int Update();
 
+//LEGACY FPS CODE [used for rendering a minimap under the camera frustrum when the game was first person]
+void renderMinimap();
+
+//Outputs the screen to the terminal window
 void RenderScreen();
 
+//Frees all memory allocated to the heap
 void END();
 
+//The function that does all the setup for you
 int Start(int _WIDTH, int _HEIGHT, void (*myStart)(), void (*OnUpdate)());
 #endif
