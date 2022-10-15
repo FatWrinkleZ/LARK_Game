@@ -21,7 +21,7 @@ void myStart(){
     PLAYER->OnUpdate = (&OnPlayerUpdate);
     PLAYER->rotation = PI/2;
     PLAYER->tag = PLAYER_TAG;
-    PLAYER->sprite = 'P';
+    PLAYER->sprite = '$';
 }
 
 int main(){

@@ -13,7 +13,7 @@ void ProcessCommand(char command[32]){
     char cmd[32];
     sscanf(command, "%s ", cmd);
     if(strcmp(cmd, "ls")==0){
-
+        
     }else if(strcmp(cmd, "man") == 0){
 
     }else if(strcmp(cmd, "kill")==0){

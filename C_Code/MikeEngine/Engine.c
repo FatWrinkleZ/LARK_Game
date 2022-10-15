@@ -179,7 +179,7 @@ void Process_Top_Down(){
             SCREEN[i][j] = ' ';
         }
     }
-    SCREEN[WIDTH/2][HEIGHT/2]='P';
+    SCREEN[WIDTH/2][HEIGHT/2]=PLAYER->sprite;
 }
 
 void CastRay(){
