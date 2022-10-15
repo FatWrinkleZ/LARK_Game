@@ -10,6 +10,10 @@ enum TAGS{
 
 int playing = 1;
 
+Transform *entity1;
+Transform *entity2;
+Transform *entity3;
+
 void myUpdate(){
 
 }
@@ -22,6 +26,10 @@ void myStart(){
     PLAYER->rotation = PI/2;
     PLAYER->tag = PLAYER_TAG;
     PLAYER->sprite = '$';
+    sprintf(PLAYER->name, "PLAYER");
+    entity1 = ADD_ENTITY();
+    entity2 = ADD_ENTITY();
+    entity3 = ADD_ENTITY();
 }
 
 int main(){

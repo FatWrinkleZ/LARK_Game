@@ -9,33 +9,7 @@ char KEYSTROKE = 1;
 int FOV = 60;
 char BRIGHTNESS_LOOKUP[4] = {'#', '+','-',' '};
 short **map;
-/*int map[24][24]={
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
-  {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1},
-  {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,1,1,0,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};*/
-
+char terminalOutput[64];
 Transform* ENTITIES;
 int numEntities = 0;
 Transform* PLAYER;
@@ -114,19 +88,25 @@ void INIT(Transform* entity){
     entity->rotation = 0.0f;
     entity->sprite = ' ';
     entity->isVisible = false;
+    entity->OnUpdate = NULL;
+    sprintf(entity->name, "ENTITY_%d", entity->instanceID);
 }
 
 void INIT_POS(Transform* entity, Vector2 position){
     entity->position = position;
     entity->tag = 0;
     entity->rotation = 0.0f;
+    entity->OnUpdate = NULL;
 }
 
-void ADD_ENTITY(Transform* entity){
+Transform* ADD_ENTITY(){
+    Transform* entity;
     numEntities++;
     ENTITIES = (Transform*)realloc(ENTITIES, sizeof(Transform)*numEntities);
     entity = &ENTITIES[numEntities-1];
     entity->instanceID = numEntities-1;
+    INIT(entity);
+    return entity;
 }
 
 int Initialize(){
@@ -138,10 +118,14 @@ int Initialize(){
         }
     }
 
-    ENTITIES = (Transform*)malloc(sizeof(Transform));
-    numEntities++;
-    PLAYER = &ENTITIES[0];
-    PLAYER->instanceID = 0;
+    ENTITIES = (Transform*)malloc(sizeof(Transform)*2);
+    ENTITIES[0].instanceID = 0;
+    sprintf(ENTITIES[0].name, "ROOT");
+    ENTITIES[0].OnUpdate = NULL;
+    ENTITIES[0].isVisible = false;
+    numEntities=2;
+    PLAYER = &ENTITIES[1];
+    PLAYER->instanceID = 1;
     INIT(PLAYER);
     PLAYER->tag = 1;
     return ENTITIES==NULL;
@@ -297,6 +281,7 @@ void RenderScreen(){
     //CastRay();
     Process_Top_Down();
     for(int e = 1; e < numEntities; e++){
+        if(ENTITIES[e].isVisible==false)continue;
         int mapToScreenPosX = (PLAYER->position.x - ENTITIES[e].position.x) + WIDTH/2;
         int mapToScreenPosY = (PLAYER->position.y - ENTITIES[e].position.y) - HEIGHT/2;
         if(mapToScreenPosX < 0 || mapToScreenPosX >= WIDTH || mapToScreenPosY < 0 || mapToScreenPosY >= HEIGHT){
@@ -315,6 +300,7 @@ void RenderScreen(){
         putchar('\r');
         putchar('\n');
     }
+    printf("%s\r\n", terminalOutput);
 }
 
 void END(){

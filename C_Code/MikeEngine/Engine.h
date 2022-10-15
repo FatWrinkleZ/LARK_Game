@@ -29,6 +29,7 @@ extern short** map;
 extern int FOV;
 extern char BRIGHTNESS_LOOKUP[4];
 extern char **SCREEN;
+extern char terminalOutput[64];
 
 extern char KEYSTROKE;
 
@@ -51,8 +52,10 @@ extern Transform* ENTITIES;
 extern int numEntities;
 extern Transform* PLAYER;
 
+//returns the character from the lookup table based on a tile's ditance from the player (IN SCREENPOSITION)
 char GET_BRIGHTNESS(int posX, int posY);
 
+//loads a level, filename is the path of the level
 int LOAD_LEVEL(const char* filename);
 
 //LEGACY FPS CODE [makes bounds of an angle to that of the unit circle (i.e: 0 -> 2PI)]
@@ -62,7 +65,7 @@ float FixAng(float ang);
 void INIT(Transform* entity);
 
 //Adds the Transform to the "master list" of Transform so thats it's OnUpdate void pointer can be called every Update
-void ADD_ENTITY(Transform* entity);
+Transform* ADD_ENTITY();
 
 //Allocates a base amount of memory to all the pointers, sets up the screen, player, and entities
 int Initialize();

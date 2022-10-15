@@ -13,7 +13,13 @@ void ProcessCommand(char command[32]){
     char cmd[32];
     sscanf(command, "%s ", cmd);
     if(strcmp(cmd, "ls")==0){
-        
+        short cnt = 0;
+        for(int i = 0; i < numEntities; i++){
+            cnt++;
+            if(cnt %4==0)printf("\r\n");
+            strcat(terminalOutput, ENTITIES[i].name);
+            strcat(terminalOutput, "\t");
+        }
     }else if(strcmp(cmd, "man") == 0){
 
     }else if(strcmp(cmd, "kill")==0){
@@ -22,6 +28,8 @@ void ProcessCommand(char command[32]){
 
     }else if(strcmp(cmd, "cat")==0){
 
+    }else if(strcmp(cmd, "echo")==0){
+        sscanf(command, "echo %[^\n]", terminalOutput);
     }else{
         printf("%s: command not found\nPress Enter to exit command mode", cmd);
         char c = getchar();
