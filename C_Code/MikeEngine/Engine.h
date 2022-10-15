@@ -27,8 +27,8 @@ extern int WIDTH, HEIGHT;
 extern int mapX, mapY;
 extern short** map;
 extern int FOV;
-
-extern char** SCREEN;
+extern char BRIGHTNESS_LOOKUP[4];
+extern char **SCREEN;
 
 extern char KEYSTROKE;
 
@@ -50,6 +50,8 @@ typedef struct{
 extern Transform* ENTITIES;
 extern int numEntities;
 extern Transform* PLAYER;
+
+char GET_BRIGHTNESS(int posX, int posY);
 
 int LOAD_LEVEL(const char* filename);
 

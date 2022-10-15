@@ -7,7 +7,7 @@ int mapX=0, mapY=0;
 char** SCREEN;
 char KEYSTROKE = 1;
 int FOV = 60;
-
+char BRIGHTNESS_LOOKUP[4] = {'#', '+','-',' '};
 short **map;
 /*int map[24][24]={
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -40,6 +40,19 @@ Transform* ENTITIES;
 int numEntities = 0;
 Transform* PLAYER;
 
+char GET_BRIGHTNESS(int posX, int posY){
+    float distX = WIDTH/(float)2 - posX, distY = HEIGHT/(float)2-posY;
+    float dist = sqrtf((distX*distX)+(distY*distY));
+    if(dist <= 5){
+        return BRIGHTNESS_LOOKUP[0];
+    }else if(dist <= 7){
+        return BRIGHTNESS_LOOKUP[1];
+    }else if(dist <= 9){
+        return BRIGHTNESS_LOOKUP[2];
+    }
+    return BRIGHTNESS_LOOKUP[3];
+}
+
 int LOAD_LEVEL(const char* filename){
     FILE* file;
     file = fopen(filename, "r");
@@ -51,31 +64,32 @@ int LOAD_LEVEL(const char* filename){
         free(map);
     }
     fseek(file, 0, SEEK_SET);
-    {
+    
     char buf[32];
     fscanf(file, "%[^\n]", buf);
-    sscanf(buf, "%d %d", &mapX, &mapY);
-    printf("FOUND FILE %d %d\n", mapX, mapY);
-    }
-    map = (short*)malloc(sizeof(short*) * mapX);
+    sscanf(buf, "%d%d", &mapX, &mapY);
+    printf("FOUND FILE %d %d\r\n", mapX, mapY);
+    
+    map = (short**)malloc(sizeof(short*) * mapX);
     for(int i = 0; i < mapX; i++){
-        map[i] = (short)malloc(sizeof(short)*mapY);
+        map[i] = (short*)malloc(sizeof(short)*mapY);
     }
     fseek(file, 1, SEEK_CUR);
-    printf("ALLOCATED TO MAP\n");
+
+    printf("ALLOCATED TO MAP\r\n");
     char c = 1;
     int x=0,y=0;
-    for(int i = 0; i < mapY; i++){
-        char buf[mapX+2];
-        fread(buf, 1, mapX+1, file);
-        for(int j = 0; j < mapX; j++){
-            //putchar(buf[j]);
-            if(buf[j] == '#' || buf[j] == ' '){
-                map[j][i] = (buf[j]=='#');
+    for(int i = mapY; i >= 0; i--){
+        for(int j = 0; j <= mapX; j++){
+            fprintf(stdout, "\rAT COORD (%d, %d)   \r\n", i, j);
+            c = fgetc(file);
+            if(c=='#'||c==' '){
+                map[j][i] = (c=='#');
+                fprintf(stdout, "%c", c);
             }
         }
+        printf("\r\n");
     }
-    printf("\r AT COORD %d %d", x, y);
     printf("FINISHED READING LEVEL FILE\n");
     for(int i = 0; i < mapX; i++){
         for(int j = 0; j < mapY; j++){
@@ -134,7 +148,7 @@ int Initialize(){
 }
 
 float Distance(float ax, float ay, float bx, float by, float ang){
-    return cosf(ang)*(bx-ax)-sinf(ang)*(by-ay);;
+    return cosf(ang)*(bx-ax)-sinf(ang)*(by-ay);
 }
 
 void SetPlaying(int var){*PLAYING = var;}
@@ -154,6 +168,7 @@ void Process_Top_Down(){
         for(int j = 0; j < HEIGHT; j++){
             int mapx=(px-offsetX) + (float)i, mapy=(py-offsetY)+(float)j;
             if(mapx < 0||mapy < 0 || mapx >= mapX || mapy >= mapY){
+
                 SCREEN[i][j] = '#';
                 continue;
             }
@@ -291,9 +306,11 @@ void RenderScreen(){
     }
     for(int i = HEIGHT; i >= 0; i--){
         for(int j = 0; j <WIDTH; j++){
-            for(int e = 0; e < numEntities; e++){
-                putchar(SCREEN[j][i]);
+            char c = SCREEN[j][i];
+            if(SCREEN[j][i]=='#'){
+                c = GET_BRIGHTNESS(j,i);
             }
+                putchar(c);
         }
         putchar('\r');
         putchar('\n');

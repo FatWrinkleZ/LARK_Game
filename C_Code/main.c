@@ -26,8 +26,8 @@ void myStart(){
 
 int main(){
     system("/bin/stty raw");
-    LOAD_LEVEL("LEVELS/lvl1.level");
-    return 0;
+    //LOAD_LEVEL("LEVELS/lvl1.level");
+    //return 0;
     PLAYING = &playing;
     //printf("Hello world\n");
     Start(60, 30, &myStart, &myUpdate);
