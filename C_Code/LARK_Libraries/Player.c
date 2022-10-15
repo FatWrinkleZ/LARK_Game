@@ -8,30 +8,94 @@ float movementSpeed = 1.0f;
 float rotateSpeed = 3.0f;
 bool last_line_mode = false;
 
+void LS(){
+    DIR *d;
+
+    struct dirent *dir;
+
+    d = opendir("LEVELS");
+
+    char buf[64];
+    buf[0] = '\0';
+    int c = 0;
+    if (d)
+
+    {
+
+        while ((dir = readdir(d)) != NULL)
+        {
+            strcat(buf, dir->d_name);
+            strcat(buf, "\t");
+            c++;
+            if(c %4 == 0)strcat(buf, "\n");
+        }
+
+        closedir(d);
+
+    }
+    sprintf(terminalOutput, "%s", buf);
+
+}
 
 void ProcessCommand(char command[32]){
     char cmd[32];
+    cmd[0] = '\0';
     sscanf(command, "%s ", cmd);
     if(strcmp(cmd, "ls")==0){
-        short cnt = 0;
-        for(int i = 0; i < numEntities; i++){
-            cnt++;
-            if(cnt %4==0)printf("\r\n");
-            strcat(terminalOutput, ENTITIES[i].name);
-            strcat(terminalOutput, "\t");
-        }
+        LS();
     }else if(strcmp(cmd, "man") == 0){
-
+        char buf[32];
+        buf[0] = '\0';
+        if(sscanf(command, "man %s", buf)<=0){
+            sprintf(terminalOutput, "%s", man);
+        }else{
+            if(strcmp(buf, "ls")==0){
+                sprintf(terminalOutput, "%s", man_ls);
+            }else if(strcmp(buf, "cat")==0){
+                sprintf(terminalOutput, "%s", man_cat);
+            }else if(strcmp(buf, "echo")==0){
+                sprintf(terminalOutput, "%s", man_echo);
+            }else if(strcmp(buf, "jobs")==0){
+                sprintf(terminalOutput, "%s", man_jobs);
+            }else if(strcmp(buf, "kill")==0){
+                sprintf(terminalOutput, "%s", man_kill);
+            }else if(strcmp(buf, "cd")==0){
+                sprintf(terminalOutput, "%s", man_cd);
+            }else{
+                sprintf(terminalOutput, "Error : unregonized man [%s]", buf);
+            }
+        }
     }else if(strcmp(cmd, "kill")==0){
         
     }else if(strcmp(cmd, "jobs")==0){
-
+        short cnt = 0;
+        char buf[64];
+        buf[0] = '\0';
+        for(int i = 0; i < numEntities; i++){
+            cnt++;
+            if(cnt %4==0)printf("\r\n");
+            strcat(buf, ENTITIES[i].name);
+            strcat(buf, "\t");
+        }
+        sprintf(terminalOutput, "%s", buf);
     }else if(strcmp(cmd, "cat")==0){
 
     }else if(strcmp(cmd, "echo")==0){
         sscanf(command, "echo %[^\n]", terminalOutput);
+    }else if(strcmp(cmd, "cd")==0){
+        char buf[64];
+        buf[0] = '\0';
+        if(sscanf(command, "cd %s", buf)>0){
+            char lvl[64];
+            lvl[0] = '\0';
+            strcat(lvl, "LEVELS/");
+            strcat(lvl, buf);
+            LOAD_LEVEL(lvl);
+        }else{
+            sprintf(terminalOutput, "Error! Usage : cd <dir>");
+        }
     }else{
-        printf("%s: command not found\nPress Enter to exit command mode", cmd);
+        printf("%s: command not found. use 'man' to see avaliable commands\nPress Enter to exit command mode", cmd);
         char c = getchar();
     }
     

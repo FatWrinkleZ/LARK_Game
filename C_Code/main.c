@@ -10,6 +10,7 @@ enum TAGS{
 
 int playing = 1;
 
+Transform *ROOT;
 Transform *entity1;
 Transform *entity2;
 Transform *entity3;

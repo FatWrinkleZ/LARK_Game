@@ -46,11 +46,14 @@ typedef struct{
     float rotation;
     char sprite;
     bool isVisible;
+    int level;
+    bool ALIVE;
 }Transform;
 
 extern Transform* ENTITIES;
 extern int numEntities;
 extern Transform* PLAYER;
+extern int LEVEL_LOADED;
 
 //returns the character from the lookup table based on a tile's ditance from the player (IN SCREENPOSITION)
 char GET_BRIGHTNESS(int posX, int posY);

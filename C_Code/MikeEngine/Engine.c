@@ -13,6 +13,7 @@ char terminalOutput[64];
 Transform* ENTITIES;
 int numEntities = 0;
 Transform* PLAYER;
+int LEVEL_LOADED;
 
 char GET_BRIGHTNESS(int posX, int posY){
     float distX = WIDTH/(float)2 - posX, distY = HEIGHT/(float)2-posY;
@@ -28,9 +29,11 @@ char GET_BRIGHTNESS(int posX, int posY){
 }
 
 int LOAD_LEVEL(const char* filename){
+    system("clear");
     FILE* file;
     file = fopen(filename, "r");
-    if(file == NULL){printf("LEVEL NOT FOUND\n");exit(0);}
+    if(file == NULL){sprintf(terminalOutput, "LEVEL [%s] NOT FOUND", filename);return -1;}
+    sprintf(terminalOutput, "FOUND LEVEL! NOW LOADING...");
     if(map != NULL){
         for(int i = 0; i < mapX; i++){
             free(map[i]);
@@ -40,9 +43,10 @@ int LOAD_LEVEL(const char* filename){
     fseek(file, 0, SEEK_SET);
     
     char buf[32];
+    buf[0] = '\0';
     fscanf(file, "%[^\n]", buf);
-    sscanf(buf, "%d%d", &mapX, &mapY);
-    printf("FOUND FILE %d %d\r\n", mapX, mapY);
+    sscanf(buf, "%d%d lvl%d", &mapX, &mapY, &LEVEL_LOADED);
+    //printf("FOUND FILE %d %d\r\n", mapX, mapY);
     
     map = (short**)malloc(sizeof(short*) * mapX);
     for(int i = 0; i < mapX; i++){
@@ -50,12 +54,10 @@ int LOAD_LEVEL(const char* filename){
     }
     fseek(file, 1, SEEK_CUR);
 
-    printf("ALLOCATED TO MAP\r\n");
     char c = 1;
     int x=0,y=0;
     for(int i = mapY; i >= 0; i--){
         for(int j = 0; j <= mapX; j++){
-            fprintf(stdout, "\rAT COORD (%d, %d)   \r\n", i, j);
             c = fgetc(file);
             if(c=='#'||c==' '){
                 map[j][i] = (c=='#');
@@ -64,16 +66,11 @@ int LOAD_LEVEL(const char* filename){
         }
         printf("\r\n");
     }
-    printf("FINISHED READING LEVEL FILE\n");
-    for(int i = 0; i < mapX; i++){
-        for(int j = 0; j < mapY; j++){
-            putchar(map[i][j] ? '#':' ');
-        }
-        printf("\r\n");
-    }
-    printf("CONFIRM MAP\r\n");
+    printf("FINISHED READING [%s] FILE\r\n", filename);
+    printf("CONFIRM MAP (any key)\r\n");
     getchar();
     fclose(file);
+    sprintf(terminalOutput, "LEVEL LOADED");
     return 0;
 }
 
@@ -89,6 +86,7 @@ void INIT(Transform* entity){
     entity->sprite = ' ';
     entity->isVisible = false;
     entity->OnUpdate = NULL;
+    entity->level = 0;
     sprintf(entity->name, "ENTITY_%d", entity->instanceID);
 }
 
@@ -105,6 +103,7 @@ Transform* ADD_ENTITY(){
     ENTITIES = (Transform*)realloc(ENTITIES, sizeof(Transform)*numEntities);
     entity = &ENTITIES[numEntities-1];
     entity->instanceID = numEntities-1;
+    entity->ALIVE = true;
     INIT(entity);
     return entity;
 }
@@ -123,11 +122,13 @@ int Initialize(){
     sprintf(ENTITIES[0].name, "ROOT");
     ENTITIES[0].OnUpdate = NULL;
     ENTITIES[0].isVisible = false;
+    ENTITIES[0].ALIVE = false;
     numEntities=2;
     PLAYER = &ENTITIES[1];
     PLAYER->instanceID = 1;
     INIT(PLAYER);
     PLAYER->tag = 1;
+    PLAYER->ALIVE = true;
     return ENTITIES==NULL;
 }
 
@@ -300,7 +301,7 @@ void RenderScreen(){
         putchar('\r');
         putchar('\n');
     }
-    printf("%s\r\n", terminalOutput);
+    printf("~$ %s\r\n", terminalOutput);
 }
 
 void END(){
