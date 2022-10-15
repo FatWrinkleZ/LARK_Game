@@ -43,35 +43,48 @@ Transform* PLAYER;
 int LOAD_LEVEL(const char* filename){
     FILE* file;
     file = fopen(filename, "r");
-    if(file == NULL){printf("LEVEL NOT FOUND\n");return -1;}
+    if(file == NULL){printf("LEVEL NOT FOUND\n");exit(0);}
     if(map != NULL){
         for(int i = 0; i < mapX; i++){
             free(map[i]);
         }
         free(map);
     }
-    fsetpos(file, 0);
-    fscanf(file, "%d", &mapX);
-    fscanf(file, "%d", &mapY);
-    printf("FOUND FILE\n");
+    fseek(file, 0, SEEK_SET);
+    {
+    char buf[32];
+    fscanf(file, "%[^\n]", buf);
+    sscanf(buf, "%d %d", &mapX, &mapY);
+    printf("FOUND FILE %d %d\n", mapX, mapY);
+    }
     map = (short*)malloc(sizeof(short*) * mapX);
     for(int i = 0; i < mapX; i++){
         map[i] = (short)malloc(sizeof(short)*mapY);
     }
+    fseek(file, 1, SEEK_CUR);
+    printf("ALLOCATED TO MAP\n");
     char c = 1;
     int x=0,y=0;
-    while(c != ';'){
-        fscanf(file, "%c", &c);
-        putchar(c);
-        if(c == '#' || c == ' '){
-            map[x][y] = (c=='#');
-            x++;
-            if(x == mapX){
-                x = 0;
-                y++;
+    for(int i = 0; i < mapY; i++){
+        char buf[mapX+2];
+        fread(buf, 1, mapX+1, file);
+        for(int j = 0; j < mapX; j++){
+            //putchar(buf[j]);
+            if(buf[j] == '#' || buf[j] == ' '){
+                map[j][i] = (buf[j]=='#');
             }
         }
     }
+    printf("\r AT COORD %d %d", x, y);
+    printf("FINISHED READING LEVEL FILE\n");
+    for(int i = 0; i < mapX; i++){
+        for(int j = 0; j < mapY; j++){
+            putchar(map[i][j] ? '#':' ');
+        }
+        printf("\r\n");
+    }
+    printf("CONFIRM MAP\r\n");
+    getchar();
     fclose(file);
     return 0;
 }
