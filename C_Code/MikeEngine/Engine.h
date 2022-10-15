@@ -25,7 +25,7 @@ extern bool* PLAYING;
 extern int UNIT_SIZE;
 extern int WIDTH, HEIGHT;
 extern int mapX, mapY;
-extern int map[24][24];
+extern short** map;
 extern int FOV;
 
 extern char** SCREEN;
@@ -44,11 +44,14 @@ typedef struct{
     int instanceID;
     float rotation;
     char sprite;
+    bool isVisible;
 }Transform;
 
 extern Transform* ENTITIES;
 extern int numEntities;
 extern Transform* PLAYER;
+
+int LOAD_LEVEL(const char* filename);
 
 //LEGACY FPS CODE [makes bounds of an angle to that of the unit circle (i.e: 0 -> 2PI)]
 float FixAng(float ang);

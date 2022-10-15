@@ -3,21 +3,22 @@
 bool* PLAYING = 0;
 int UNIT_SIZE = 4;
 int WIDTH = 0, HEIGHT = 0;
-int mapX, mapY;
+int mapX=0, mapY=0;
 char** SCREEN;
 char KEYSTROKE = 1;
 int FOV = 60;
 
-int map[24][24]={
+short **map;
+/*int map[24][24]={
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
+  {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1},
+  {1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,1,1,0,1,1,0,0,0,0,1,0,1,0,1,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -25,19 +26,56 @@ int map[24][24]={
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
+};*/
 
 Transform* ENTITIES;
 int numEntities = 0;
 Transform* PLAYER;
+
+int LOAD_LEVEL(const char* filename){
+    FILE* file;
+    file = fopen(filename, "r");
+    if(file == NULL){printf("LEVEL NOT FOUND\n");return -1;}
+    if(map != NULL){
+        for(int i = 0; i < mapX; i++){
+            free(map[i]);
+        }
+        free(map);
+    }
+    fsetpos(file, 0);
+    int w=0, h=0;
+    fscanf(file, "%d", &mapX);
+    fscanf(file, "%d", &mapY);
+    printf("FOUND FILE\n");
+    map = (short*)malloc(sizeof(short*) * mapX);
+    for(int i = 0; i < mapX; i++){
+        map[i] = (short)malloc(sizeof(short)*mapY);
+    }
+    char c = 1;
+    int x=0,y=0;
+    while(c != ';'){
+        fscanf(file, "%c", &c);
+        putchar(c);
+        if(c == '#' || c == ' '){
+            map[x][y] = (c=='#');
+            x++;
+            if(x == mapX){
+                x = 0;
+                y++;
+            }
+        }
+    }
+    fclose(file);
+    return 0;
+}
 
 float FixAng(float ang){
     if(ang>2*PI){ ang-=2*PI;} if(ang<0){ ang+=2*PI;} return ang;
@@ -48,6 +86,8 @@ void INIT(Transform* entity){
     entity->position.y = 0;
     entity->tag = 0;
     entity->rotation = 0.0f;
+    entity->sprite = ' ';
+    entity->isVisible = false;
 }
 
 void INIT_POS(Transform* entity, Vector2 position){
@@ -97,10 +137,11 @@ void Process_Top_Down(){
     int maxCamX = (int)(px + WIDTH/2), maxCamY = (int)(py + (HEIGHT/2));
     int minCamx = (int)(px - WIDTH/2), minCamy = (int)(py - (HEIGHT/2));
     printf("SCREEN TO WORLD COORDS => MAX(%d, %d), MIN(%d, %d)\r\n", maxCamX, maxCamY, minCamx, minCamy);
+    printf("PLAYER COORDS (%f, %f)\r\n", PLAYER->position.x, PLAYER->position.y);
     for(int i = 0; i < WIDTH; i++){
         for(int j = 0; j < HEIGHT; j++){
             int mapx=(px-offsetX) + (float)i, mapy=(py-offsetY)+(float)j;
-            if(mapx < 0||mapy < 0 || mapx > 23 || mapy > 23){
+            if(mapx < 0||mapy < 0 || mapx >= mapX || mapy >= mapY){
                 SCREEN[i][j] = '#';
                 continue;
             }
@@ -111,6 +152,7 @@ void Process_Top_Down(){
             SCREEN[i][j] = ' ';
         }
     }
+    SCREEN[WIDTH/2][HEIGHT/2]='P';
 }
 
 void CastRay(){
@@ -227,9 +269,9 @@ void RenderScreen(){
     system("clear");
     //CastRay();
     Process_Top_Down();
-    for(int e = 0; e < numEntities; e++){
-        int mapToScreenPosX = PLAYER->position.x - ENTITIES[e].position.x;
-        int mapToScreenPosY = PLAYER->position.y - ENTITIES[e].position.y;
+    for(int e = 1; e < numEntities; e++){
+        int mapToScreenPosX = (PLAYER->position.x - ENTITIES[e].position.x) + WIDTH/2;
+        int mapToScreenPosY = (PLAYER->position.y - ENTITIES[e].position.y) - HEIGHT/2;
         if(mapToScreenPosX < 0 || mapToScreenPosX >= WIDTH || mapToScreenPosY < 0 || mapToScreenPosY >= HEIGHT){
             continue;
         }
@@ -241,11 +283,9 @@ void RenderScreen(){
                 putchar(SCREEN[j][i]);
             }
         }
-        //printf("%s\r\n", SCREEN[i]);
         putchar('\r');
         putchar('\n');
     }
-    //printf("\r\nNEW FRAME\r\n");
 }
 
 void END(){
@@ -259,15 +299,20 @@ void END(){
 int Start(int _WIDTH, int _HEIGHT, void (*myStart)(), void (*OnUpdate)()){
     WIDTH = _WIDTH;
     HEIGHT = _HEIGHT;
+    int levelLoaded = LOAD_LEVEL("LEVELS/lvl1.level");
+    if(levelLoaded == -1){
+        system("/bin/stty cooked");
+        printf("LEVEL NOT FOUND!\n");
+        exit(0);
+    }
     //PLAYING = 1;
     Initialize();
     myStart();
+    RenderScreen();
     while(*PLAYING != 0){
-        RenderScreen();
-        //PLAYING = getchar()!='0';
         Update();
+        RenderScreen();
         OnUpdate();
-        //printf("\r\nEND OF FRAME\r\n");
     }
     system("/bin/stty cooked");
     printf("\nFINISHED\n");

@@ -15,6 +15,7 @@ void myUpdate(){
 }
 
 void myStart(){
+    //LOAD_LEVEL("LEVELS/lvl1.level");
     PLAYER->position.x = 4;
     PLAYER->position.y = 4;
     PLAYER->OnUpdate = (&OnPlayerUpdate);
@@ -24,6 +25,8 @@ void myStart(){
 }
 
 int main(){
+    LOAD_LEVEL("LEVELS/lvl1.level");
+    return 0;
     PLAYING = &playing;
     //printf("Hello world\n");
     system("/bin/stty raw");
