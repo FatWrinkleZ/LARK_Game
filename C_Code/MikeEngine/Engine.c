@@ -51,7 +51,6 @@ int LOAD_LEVEL(const char* filename){
         free(map);
     }
     fsetpos(file, 0);
-    int w=0, h=0;
     fscanf(file, "%d", &mapX);
     fscanf(file, "%d", &mapY);
     printf("FOUND FILE\n");
