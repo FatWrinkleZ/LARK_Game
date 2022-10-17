@@ -15,22 +15,58 @@ Transform *entity1;
 Transform *entity2;
 Transform *entity3;
 
+void LOG_ENTITIES(){
+    for(int i = 0; i < numEntities; i++){
+        fprintf(myLog, "CREATED ENTITY : [%s] with [%d] Instance ID\n", ENTITIES[i].name, ENTITIES[i].instanceID);
+    }
+}
+
 void myUpdate(){
 
 }
 
 void myStart(){
     //LOAD_LEVEL("LEVELS/lvl1.level");
-    PLAYER->position.x = 4;
-    PLAYER->position.y = 4;
+    PLAYER->position.x = mapX/2;
+    PLAYER->position.y = mapY/2;
     PLAYER->OnUpdate = (&OnPlayerUpdate);
     PLAYER->rotation = PI/2;
     PLAYER->tag = PLAYER_TAG;
     PLAYER->sprite = '$';
     sprintf(PLAYER->name, "PLAYER");
+
     entity1 = ADD_ENTITY();
+    entity1->isFile = true;
+    entity1->isJob = true;
+    entity1->isVisible = true;
+    entity1->sprite = 'K';
+    entity1->position.x = 10;
+    entity1->position.y = 10;
+    entity1->tag = 2;
+    sprintf(entity1->name, "KEY_LVL1.key");
+
     entity2 = ADD_ENTITY();
+    entity2->isFile = true;
+    entity2->isJob = true;
+    entity2->isVisible = true;
+    entity2->level = 2;
+    entity2->position.x = 55;
+    entity2->position.y = 28;
+    entity2->sprite = 'K';
+    entity2->tag = 2;
+    sprintf(entity2->name, "KEY_LVL2.key");
+
     entity3 = ADD_ENTITY();
+    entity3->isFile = true;
+    entity3->sprite = '%';
+    entity3->level = 1;
+    entity3->position.x = 10;
+    entity3->position.y = 26;
+    entity3->isVisible = true;
+    entity3->tag = 3;
+    sprintf(entity3->name, "DOOR_LVL1");
+
+    LOG_ENTITIES();
 }
 
 int main(){

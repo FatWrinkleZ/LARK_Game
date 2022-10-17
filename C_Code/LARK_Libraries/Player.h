@@ -8,6 +8,11 @@
 extern float movementSpeed;
 extern float rotateSpeed;
 
+extern Transform *item;
+
+//processes the ./ command
+void dotSlashCmD(char command[64]);
+
 //outputs all files in the LEVELS directory
 void LS();
 

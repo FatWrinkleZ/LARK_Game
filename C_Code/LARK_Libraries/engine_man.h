@@ -1,6 +1,6 @@
 #ifndef ENGINE_MAN_H
 #define ENGINE_MAN_H
-extern char man_ls[64];
+extern char man_ls[100];
 
 extern char man[64];
 

@@ -1,6 +1,9 @@
 # LARK_Game
 L.A.R.K Game for Intro To Unix
 
+10/16/2022
+  Got items working. Got a basic 1 item inventory. Player can pickup and put down items. Keys unlock doors in their corresponding level. ls, cat, cd, jobs, and ./ commands work. added a second level to test level loading. Thats about it.
+
 10/15/2022
   FINALLY got level loading to work. Added basic lighting. Procrastinating on commands.
 

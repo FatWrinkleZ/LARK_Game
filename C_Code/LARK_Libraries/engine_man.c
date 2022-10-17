@@ -1,6 +1,6 @@
 #include "engine_man.h"
 
-char man_ls[64] = "Use ls to list all the directories";
+char man_ls[100] = "Use ls to list all the directories (unlike actual bash ls, this cannot be paired with arguments)";
 char man[64] = "Type man <cmd> (cmd can be 'ls', 'cat', 'jobs', 'kill', 'echo'";
 char man_cat[64] = "Use cat to express contents of a file";
 char man_echo[64] = "Usage : echo <str>";

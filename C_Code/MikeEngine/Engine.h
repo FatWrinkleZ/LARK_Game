@@ -21,6 +21,7 @@
 #define KCYN  "\x1B[36m"
 #define KWHT  "\x1B[37m"
 
+extern FILE* myLog;
 extern bool* PLAYING;
 extern int UNIT_SIZE;
 extern int WIDTH, HEIGHT;
@@ -29,7 +30,7 @@ extern short** map;
 extern int FOV;
 extern char BRIGHTNESS_LOOKUP[4];
 extern char **SCREEN;
-extern char terminalOutput[64];
+extern char *terminalOutput;
 
 extern char KEYSTROKE;
 
@@ -48,6 +49,8 @@ typedef struct{
     bool isVisible;
     int level;
     bool ALIVE;
+    bool isJob;
+    bool isFile;
 }Transform;
 
 extern Transform* ENTITIES;

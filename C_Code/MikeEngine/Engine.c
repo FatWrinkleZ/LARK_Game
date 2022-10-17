@@ -1,5 +1,7 @@
 #include "Engine.h"
 
+FILE* myLog;
+
 bool* PLAYING = 0;
 int UNIT_SIZE = 4;
 int WIDTH = 0, HEIGHT = 0;
@@ -9,7 +11,7 @@ char KEYSTROKE = 1;
 int FOV = 60;
 char BRIGHTNESS_LOOKUP[4] = {'#', '+','-',' '};
 short **map;
-char terminalOutput[64];
+char *terminalOutput;
 Transform* ENTITIES;
 int numEntities = 0;
 Transform* PLAYER;
@@ -86,8 +88,10 @@ void INIT(Transform* entity){
     entity->sprite = ' ';
     entity->isVisible = false;
     entity->OnUpdate = NULL;
-    entity->level = 0;
+    entity->level = LEVEL_LOADED;
     sprintf(entity->name, "ENTITY_%d", entity->instanceID);
+    entity->isFile = false;
+    entity->isJob = true;
 }
 
 void INIT_POS(Transform* entity, Vector2 position){
@@ -104,7 +108,12 @@ Transform* ADD_ENTITY(){
     entity = &ENTITIES[numEntities-1];
     entity->instanceID = numEntities-1;
     entity->ALIVE = true;
+    entity->level = LEVEL_LOADED;
     INIT(entity);
+    for(int i = 0; i < numEntities; i++){
+        ENTITIES[i].instanceID = i;
+    }
+    
     return entity;
 }
 
@@ -282,13 +291,13 @@ void RenderScreen(){
     //CastRay();
     Process_Top_Down();
     for(int e = 1; e < numEntities; e++){
-        if(ENTITIES[e].isVisible==false)continue;
-        int mapToScreenPosX = (PLAYER->position.x - ENTITIES[e].position.x) + WIDTH/2;
-        int mapToScreenPosY = (PLAYER->position.y - ENTITIES[e].position.y) - HEIGHT/2;
+        if(ENTITIES[e].isVisible==false || ENTITIES[e].level != LEVEL_LOADED)continue;
+        int mapToScreenPosX = (ENTITIES[e].position.x-PLAYER->position.x) + WIDTH/2;
+        int mapToScreenPosY = (ENTITIES[e].position.y-PLAYER->position.y) + HEIGHT/2;
         if(mapToScreenPosX < 0 || mapToScreenPosX >= WIDTH || mapToScreenPosY < 0 || mapToScreenPosY >= HEIGHT){
             continue;
         }
-        SCREEN[(int)ENTITIES[e].position.x][(int)ENTITIES[e].position.y] = ENTITIES[e].sprite;
+        SCREEN[mapToScreenPosX][mapToScreenPosY] = ENTITIES[e].sprite;
     }
     for(int i = HEIGHT; i >= 0; i--){
         for(int j = 0; j <WIDTH; j++){
@@ -305,17 +314,31 @@ void RenderScreen(){
 }
 
 void END(){
+    fclose(myLog);
     for(int i = 0; i < HEIGHT; i++){
         free(SCREEN[i]);
     }
     free(ENTITIES);
+    for(int i = 0; i < mapX; i++){
+        free(map[i]);
+    }
+    free(map);
     free(SCREEN);
+    free(terminalOutput);
 }
 
 int Start(int _WIDTH, int _HEIGHT, void (*myStart)(), void (*OnUpdate)()){
+    myLog = fopen("lark_log.log", "w");
+    if(log == NULL){
+        printf("ERROR, could not open file!");
+        system("/bin/stty cooked");
+        exit(1);
+    }
     WIDTH = _WIDTH;
     HEIGHT = _HEIGHT;
+    terminalOutput = (char*)malloc(sizeof(char)*512);
     int levelLoaded = LOAD_LEVEL("LEVELS/lvl1.level");
+    sprintf(terminalOutput, "Press '$' to enter command mode");
     if(levelLoaded == -1){
         system("/bin/stty cooked");
         printf("LEVEL NOT FOUND!\n");
@@ -327,8 +350,8 @@ int Start(int _WIDTH, int _HEIGHT, void (*myStart)(), void (*OnUpdate)()){
     RenderScreen();
     while(*PLAYING != 0){
         Update();
-        RenderScreen();
         OnUpdate();
+        RenderScreen();
     }
     system("/bin/stty cooked");
     printf("\nFINISHED\n");
