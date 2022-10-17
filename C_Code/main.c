@@ -14,6 +14,7 @@ Transform *ROOT;
 Transform *entity1;
 Transform *entity2;
 Transform *entity3;
+Transform *entity4;
 
 void LOG_ENTITIES(){
     for(int i = 0; i < numEntities; i++){
@@ -40,18 +41,19 @@ void myStart(){
     entity1->isJob = true;
     entity1->isVisible = true;
     entity1->sprite = 'K';
-    entity1->position.x = 10;
-    entity1->position.y = 10;
+    entity1->position.x = 55;
+    entity1->position.y = 28;
     entity1->tag = 2;
+    entity1->level = 2;
     sprintf(entity1->name, "KEY_LVL1.key");
 
     entity2 = ADD_ENTITY();
     entity2->isFile = true;
     entity2->isJob = true;
     entity2->isVisible = true;
-    entity2->level = 2;
-    entity2->position.x = 55;
-    entity2->position.y = 28;
+    entity2->level = 1;
+    entity2->position.x = 10;
+    entity2->position.y = 10;
     entity2->sprite = 'K';
     entity2->tag = 2;
     sprintf(entity2->name, "KEY_LVL2.key");
@@ -66,6 +68,15 @@ void myStart(){
     entity3->tag = 3;
     sprintf(entity3->name, "DOOR_LVL1");
 
+    entity4 = ADD_ENTITY();
+    entity4->isFile = true;
+    entity4->sprite = '%';
+    entity4->level = 2;
+    entity4->position.x = 45;
+    entity4->position.y = 17;
+    entity4->isVisible = true;
+    entity4->tag = 3;
+    sprintf(entity4->name, "DOOR_LVL2");
     LOG_ENTITIES();
 }
 
