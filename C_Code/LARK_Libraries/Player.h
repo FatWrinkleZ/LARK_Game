@@ -20,6 +20,6 @@ void LS();
 void ProcessCommand(char command[32]);
 
 //what the player does every update
-void OnPlayerUpdate();
+void OnPlayerUpdate(Transform* this);
 
 #endif

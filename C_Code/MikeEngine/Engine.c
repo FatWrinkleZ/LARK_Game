@@ -249,7 +249,7 @@ int Update(){
     KEYSTROKE = 0;
     for(int i = 0; i < numEntities; i++){
         if(ENTITIES[i].OnUpdate!=NULL){
-            ENTITIES[i].OnUpdate();
+            ENTITIES[i].OnUpdate(&ENTITIES[i]);
         }
     }
     return 0;

@@ -1,5 +1,6 @@
 #include "MikeEngine/Engine.h"
 #include "LARK_Libraries/Player.h"
+#include "LARK_Libraries/entity_functions.h"
 
 enum TAGS{
     DEFAULT,
@@ -15,6 +16,7 @@ Transform *entity1;
 Transform *entity2;
 Transform *entity3;
 Transform *entity4;
+Transform *trigger;
 
 void LOG_ENTITIES(){
     for(int i = 0; i < numEntities; i++){
@@ -77,6 +79,18 @@ void myStart(){
     entity4->isVisible = true;
     entity4->tag = 3;
     sprintf(entity4->name, "DOOR_LVL2");
+
+    trigger = ADD_ENTITY();
+    trigger->isFile = true;
+    trigger->sprite = ' ';
+    trigger->level = 1;
+    trigger->position.x = 22;
+    trigger->position.y = 9;
+    trigger->isVisible = false;
+    trigger->tag = 0;
+    trigger->OnUpdate = &TriggerUpdate;
+    sprintf(entity4->name, "TRIGGER");
+
     LOG_ENTITIES();
 }
 

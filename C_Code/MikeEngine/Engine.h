@@ -40,7 +40,7 @@ typedef struct {
 
 typedef struct{
     Vector2 position;
-    void (*OnUpdate)();
+    void (*OnUpdate)(void*);
     char name[128];
     int tag;
     int instanceID;

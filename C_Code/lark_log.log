@@ -3,4 +3,5 @@ CREATED ENTITY : [PLAYER] with [1] Instance ID
 CREATED ENTITY : [KEY_LVL1.key] with [2] Instance ID
 CREATED ENTITY : [KEY_LVL2.key] with [3] Instance ID
 CREATED ENTITY : [DOOR_LVL1] with [4] Instance ID
-CREATED ENTITY : [DOOR_LVL2] with [5] Instance ID
+CREATED ENTITY : [TRIGGER] with [5] Instance ID
+CREATED ENTITY : [ENTITY_6] with [6] Instance ID

@@ -192,7 +192,7 @@ void ProcessCommand(char command[32]){
     
 }
 
-void OnPlayerUpdate(){
+void OnPlayerUpdate(Transform* this){
     char keystroke = getchar();
     Vector2 direction = {0,0};
     switch(keystroke)
