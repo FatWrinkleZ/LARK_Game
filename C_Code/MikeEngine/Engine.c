@@ -294,7 +294,7 @@ void RenderScreen(){
         if(ENTITIES[e].isVisible==false || ENTITIES[e].level != LEVEL_LOADED)continue;
         int mapToScreenPosX = (ENTITIES[e].position.x-PLAYER->position.x) + WIDTH/2;
         int mapToScreenPosY = (ENTITIES[e].position.y-PLAYER->position.y) + HEIGHT/2;
-        if(mapToScreenPosX < 0 || mapToScreenPosX >= WIDTH || mapToScreenPosY < 0 || mapToScreenPosY >= HEIGHT){
+        if(mapToScreenPosX < 0 || mapToScreenPosX >= WIDTH || mapToScreenPosY < 0 || mapToScreenPosY >= HEIGHT || GET_BRIGHTNESS(mapToScreenPosX, mapToScreenPosY)==' '){
             continue;
         }
         SCREEN[mapToScreenPosX][mapToScreenPosY] = ENTITIES[e].sprite;
@@ -305,6 +305,11 @@ void RenderScreen(){
             if(SCREEN[j][i]=='#'){
                 c = GET_BRIGHTNESS(j,i);
             }
+            if(SCREEN[j][i] != '#'){
+                printf("%s", KGRN);
+                putchar(c);
+                printf("%s",KNRM);
+            }else
                 putchar(c);
         }
         putchar('\r');

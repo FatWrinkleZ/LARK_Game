@@ -48,17 +48,22 @@ void dotSlashCmD(char command[64]){
         }else if(strcmp(progrm, "unlock.sh")==0){
             if(item!=NULL){
                 for(int i = 0; i < numEntities; i++){
-                    if(ENTITIES[i].tag == 3 && ENTITIES[i].level == LEVEL_LOADED && ENTITIES[i].level == item->name[strlen(item->name)-5]-48){
+                    if(ENTITIES[i].tag == 3 && ENTITIES[i].level == LEVEL_LOADED){
                         float distX = absolute(PLAYER->position.x - ENTITIES[i].position.x);
                         float distY = absolute(PLAYER->position.y - ENTITIES[i].position.y);
-                        if(distX <= 1 && distY <= 1){
+                        
+                        if(distX <= 1 && distY <= 1 && ENTITIES[i].name[0] == item->name[0]){
                             ENTITIES[i].isVisible = false;
                             ENTITIES[i].ALIVE = false;
                             ENTITIES[i].isJob = false;
                             ENTITIES[i].isFile = false;
-                            char bff[32];
-                            sprintf(bff, "\r\nUNLOCKED DOOR WITH JOB ID [%d]", ENTITIES[i].instanceID);
+                            char bff[64];
+                            sprintf(bff, "\r\nUNLOCKED DOOR [%s] WITH JOB ID [%d]",ENTITIES[i].name,  ENTITIES[i].instanceID);
                             strcat(terminalOutput, bff);
+                        }else if (distX <= 1 && distY <= 1){
+                            char buffer[64];
+                            sprintf(buffer, "Can't use %s on %s\r\n", item->name,ENTITIES[i].name );
+                            strcat(terminalOutput, buffer);
                         }
                     }
                 }
@@ -159,7 +164,7 @@ void ProcessCommand(char command[32]){
             for(int i = 1; i < numEntities; i ++){
                 if(strcmp(buf, ENTITIES[i].name)==0 && ENTITIES[i].isFile){
                     char info[512];
-                    sprintf(info, "\r\nNAME : %s\r\nPOSITION (%d, %d)\r\nIS_VISIBLE = %d\r\nJOB ID = %d\r\nLVL = %d",ENTITIES[i].name, (int)ENTITIES[i].position.x, (int)ENTITIES[i].position.y, ENTITIES[i].isVisible, ENTITIES[i].instanceID, ENTITIES[i].level);
+                    sprintf(info, "\r\nNAME : %s\r\nPOSITION (%d, %d)\r\nSPRITE = %c\r\nIS_VISIBLE = %d\r\nJOB ID = %d\r\nLVL = %d",ENTITIES[i].name, (int)ENTITIES[i].position.x, (int)ENTITIES[i].position.y, ENTITIES[i].sprite,ENTITIES[i].isVisible,  ENTITIES[i].instanceID, ENTITIES[i].level);
                     sprintf(terminalOutput, "%s", info);
                     found = true;
                     break;
