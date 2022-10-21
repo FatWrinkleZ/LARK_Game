@@ -3,7 +3,7 @@ L.A.R.K Game for Intro To Unix
 
 10/20/2022
   Entities render as a different color. They are now only visible within the view radius. Streamlined doors and keys (keys can work with doors not from their level). Streamlined triggers. Also I made a video a while ago, I just forgot to put it here. Here is the semi-current state of the game(about 2 updates back) https://www.youtube.com/watch?v=0QTwda36xbw. Also added some logic for a new item, the lamp, which highlights trap. Added a stats.sh program that displays player health and current item. And here is a free screenshot for how the game looks atm
-  ![Screenshot]("Screenshots/screenshot_03.png")
+  ![Screenshot](Screenshots/screenshot_03.png, "Screenshot")
 
 10/16/2022
   Got items working. Got a basic 1 item inventory. Player can pickup and put down items. Keys unlock doors in their corresponding level. ls, cat, cd, jobs, and ./ commands work. added a second level to test level loading. Thats about it.
