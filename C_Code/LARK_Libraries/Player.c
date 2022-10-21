@@ -15,7 +15,7 @@ void dotSlashCmD(char command[64]){
     terminalOutput[0] = '\0';
     if(sscanf(command, "./%s", progrm)>0){
         if(strcmp(progrm, "pickup.sh")==0){
-            for(int i = 0; i < numEntities; i ++){
+            for(int i = 2; i < numEntities; i ++){
                 if((int)PLAYER->position.x==(int)ENTITIES[i].position.x && (int)PLAYER->position.y == (int)ENTITIES[i].position.y){
                     if(item != NULL){
                         item->position.x = PLAYER->position.x;
