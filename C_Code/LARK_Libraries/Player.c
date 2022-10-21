@@ -4,6 +4,8 @@
 #define FORWARD 'w'
 #define BACK 's'
 
+int health = 100;
+
 float movementSpeed = 1.0f;
 float rotateSpeed = 3.0f;
 bool last_line_mode = false;
@@ -21,10 +23,13 @@ void dotSlashCmD(char command[64]){
                         item->position.x = PLAYER->position.x;
                         item->position.y = PLAYER->position.y;
                         item->isVisible = true;
+                        item->isJob = true;
+                        item->isFile = true;
                         item->level = LEVEL_LOADED;
                         strcat(terminalOutput, "\r\nDROPPED ");
                         strcat(terminalOutput, item->name);
                     }
+                    ENTITIES[i].isFile = false;
                     ENTITIES[i].isJob = false;
                     ENTITIES[i].isVisible = false;
                     item = &ENTITIES[i];
@@ -39,40 +44,25 @@ void dotSlashCmD(char command[64]){
                 item->position.x = PLAYER->position.x;
                 item->position.y = PLAYER->position.y;
                 item->isVisible = true;
+                item->isJob = true;
+                item->isFile = true;
                 item->level = LEVEL_LOADED;
                 sprintf(terminalOutput, "\r\nDROPPED [%s]", item->name);
                 item = NULL;
             }else{
                 sprintf(terminalOutput, "\r\nCANNOT DROP : NO ITEM IN INVENTORY");
             }
-        }else if(strcmp(progrm, "unlock.sh")==0){
-            if(item!=NULL){
-                for(int i = 0; i < numEntities; i++){
-                    if(ENTITIES[i].tag == 3 && ENTITIES[i].level == LEVEL_LOADED){
-                        float distX = absolute(PLAYER->position.x - ENTITIES[i].position.x);
-                        float distY = absolute(PLAYER->position.y - ENTITIES[i].position.y);
-                        
-                        if(distX <= 1 && distY <= 1 && ENTITIES[i].name[0] == item->name[0]){
-                            ENTITIES[i].isVisible = false;
-                            ENTITIES[i].ALIVE = false;
-                            ENTITIES[i].isJob = false;
-                            ENTITIES[i].isFile = false;
-                            char bff[64];
-                            sprintf(bff, "\r\nUNLOCKED DOOR [%s] WITH JOB ID [%d]",ENTITIES[i].name,  ENTITIES[i].instanceID);
-                            strcat(terminalOutput, bff);
-                        }else if (distX <= 1 && distY <= 1){
-                            char buffer[64];
-                            sprintf(buffer, "Can't use %s on %s\r\n", item->name,ENTITIES[i].name );
-                            strcat(terminalOutput, buffer);
-                        }
-                    }
-                }
+        }else if(strcmp(progrm, "use.sh")==0){
+            if(item!=NULL && item->OnUse != NULL){
+                item->OnUse(item);
             }
+        }else if(strcmp(progrm, "stats.sh")==0){
+            sprintf(terminalOutput, "\r\nHEATH = %d\r\nCURRENT ITEM = %s", health, item==NULL ? "[no_item_in_inventory]" : item->name);
         }else{
             sprintf(terminalOutput, "\r\ncannot find %s: no file or directory", progrm);
         }
     }else{
-        sprintf(terminalOutput, "Error, need to feed a program (i.e: pickup.sh, unlock.sh, drop.sh");
+        sprintf(terminalOutput, "Error, need to feed a program (i.e: pickup.sh, unlock.sh, drop.sh, ect...");
     }
 }
 
@@ -102,11 +92,11 @@ void LS(){
             strcat(buf, ENTITIES[i].name);
             strcat(buf, "\t");
             c++;
-            if(c %4 == 0)strcat(buf, "\n");
+            if(c %4 == 0)strcat(buf, "\r\n");
         }
     }
     sprintf(terminalOutput, "%s", buf);
-    strcat(terminalOutput, "\r\npickup.sh\tdrop.sh\t\tunlock.sh");
+    strcat(terminalOutput, "\r\npickup.sh\tdrop.sh\t\tuse.sh\t\tstats.sh");
 
 }
 
@@ -197,6 +187,17 @@ void ProcessCommand(char command[32]){
     
 }
 
+bool isASolidBlock(char c){
+    char BLOCKS[4] = {'#', '+', '-', '%'};
+    int len = sizeof(BLOCKS)/sizeof(char);
+    for(int i = 0; i < len;i++){
+        if(c==BLOCKS[i]){
+            return true;
+        }
+    }
+    return false;
+}
+
 void OnPlayerUpdate(Transform* this){
     char keystroke = getchar();
     Vector2 direction = {0,0};
@@ -220,7 +221,7 @@ void OnPlayerUpdate(Transform* this){
         //PLAYER->position.x -= sinf(PLAYER->rotation) * movementSpeed / UNIT_SIZE;
         direction.y --;
         break;
-    case '$':
+    case 27:
         last_line_mode = true;
     break;
     case '0':
@@ -230,7 +231,7 @@ void OnPlayerUpdate(Transform* this){
         break;
     }  
     char movTile = SCREEN[WIDTH/2+(int)direction.x][HEIGHT/2 + (int)direction.y];
-    if(movTile==' ' || movTile == 'K'){
+    if(!isASolidBlock(movTile)){
         PLAYER->position.x += direction.x;
         PLAYER->position.y += direction.y;
     }

@@ -92,6 +92,7 @@ void INIT(Transform* entity){
     sprintf(entity->name, "ENTITY_%d", entity->instanceID);
     entity->isFile = false;
     entity->isJob = true;
+    entity->OnUse = NULL;
 }
 
 void INIT_POS(Transform* entity, Vector2 position){
@@ -161,7 +162,7 @@ void Process_Top_Down(){
     for(int i = 0; i < WIDTH; i++){
         for(int j = 0; j < HEIGHT; j++){
             int mapx=(px-offsetX) + (float)i, mapy=(py-offsetY)+(float)j;
-            if(mapx < 0||mapy < 0 || mapx >= mapX || mapy >= mapY){
+            if(mapx < 0||mapy < 2 || mapx >= mapX || mapy >= mapY){
 
                 SCREEN[i][j] = '#';
                 continue;
@@ -343,7 +344,7 @@ int Start(int _WIDTH, int _HEIGHT, void (*myStart)(), void (*OnUpdate)()){
     HEIGHT = _HEIGHT;
     terminalOutput = (char*)malloc(sizeof(char)*512);
     int levelLoaded = LOAD_LEVEL("LEVELS/lvl1.level");
-    sprintf(terminalOutput, "Press '$' to enter command mode");
+    sprintf(terminalOutput, "Press (Esc) to enter command mode");
     if(levelLoaded == -1){
         system("/bin/stty cooked");
         printf("LEVEL NOT FOUND!\n");

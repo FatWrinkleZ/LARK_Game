@@ -51,6 +51,7 @@ typedef struct{
     bool ALIVE;
     bool isJob;
     bool isFile;
+    void (*OnUse)(void *);
 }Transform;
 
 extern Transform* ENTITIES;

@@ -31,6 +31,7 @@ void ENTITY_SETUP(){
     entity1->position.y = 28;
     entity1->tag = 2;
     entity1->level = 2;
+    entity1->OnUse = &UseKey;
     sprintf(entity1->name, "1.key");
 
     entity2 = ADD_ENTITY();
@@ -42,6 +43,7 @@ void ENTITY_SETUP(){
     entity2->position.y = 10;
     entity2->sprite = 'K';
     entity2->tag = 2;
+    entity2->OnUse = &UseKey;
     sprintf(entity2->name, "2.key");
 
     entity3 = ADD_ENTITY();

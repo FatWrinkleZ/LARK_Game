@@ -14,4 +14,13 @@ void WriteToTerminalOutput(char* str);
 //changes visibility of given transform to that of active bool
 void SetActive(Transform* t, bool active);
 
+//highlights all nearby traps
+void UseLantern(void);
+
+//checks all surrounding tiles of the player to see if they are a compatible door
+void UseKey(Transform *key);
+
+//triggers trap and does damage if player walks over it
+void TriggerTrap(Transform* this);
+
 #endif
