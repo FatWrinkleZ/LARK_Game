@@ -55,7 +55,7 @@ void UseKey(Transform *key){
 }
 
 void TriggerTrap(Transform *t){
-    if((int)t->position.x == (int)PLAYER->position.x && (int)t->position.y == (int)PLAYER->position.y){
+    if(t->level == LEVEL_LOADED && (int)t->position.x == (int)PLAYER->position.x && (int)t->position.y == (int)PLAYER->position.y){
         float trapDMG = -15;
         PLAYER->OnUse(&trapDMG);
         sprintf(terminalOutput, "\r\nPLAYER STEPPED ON [%s], [%d] damage was done\r\nUse './stats.sh' to see current health", t->name, -15);

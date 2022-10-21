@@ -10,7 +10,7 @@ extern char man_echo[64];
 
 extern char man_jobs[64];
 
-extern char man_kill[64];
+extern char man_exit[64];
 
 extern char man_cd[64];
 

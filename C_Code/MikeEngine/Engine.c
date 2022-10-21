@@ -6,12 +6,12 @@ bool* PLAYING = 0;
 int UNIT_SIZE = 4;
 int WIDTH = 0, HEIGHT = 0;
 int mapX=0, mapY=0;
-char** SCREEN;
+unsigned char** SCREEN;
 char KEYSTROKE = 1;
 int FOV = 60;
 char BRIGHTNESS_LOOKUP[4] = {'#', '+','-',' '};
 short **map;
-char *terminalOutput;
+unsigned char *terminalOutput;
 Transform* ENTITIES;
 int numEntities = 0;
 Transform* PLAYER;
@@ -326,6 +326,7 @@ void RenderScreen(){
 }
 
 void END(){
+    system("/bin/stty cooked");
     fclose(myLog);
     for(int i = 0; i < HEIGHT; i++){
         free(SCREEN[i]);

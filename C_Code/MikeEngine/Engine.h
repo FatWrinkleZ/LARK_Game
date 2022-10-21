@@ -29,8 +29,8 @@ extern int mapX, mapY;
 extern short** map;
 extern int FOV;
 extern char BRIGHTNESS_LOOKUP[4];
-extern char **SCREEN;
-extern char *terminalOutput;
+extern unsigned char **SCREEN;
+extern unsigned char *terminalOutput;
 
 extern char KEYSTROKE;
 
@@ -45,7 +45,7 @@ typedef struct{
     int tag;
     int instanceID;
     float rotation;
-    char sprite;
+    unsigned char sprite;
     bool isVisible;
     int level;
     bool ALIVE;

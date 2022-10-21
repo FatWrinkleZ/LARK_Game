@@ -9,6 +9,8 @@ int health = 100;
 float movementSpeed = 1.0f;
 float rotateSpeed = 3.0f;
 bool last_line_mode = false;
+char suPass[64]="Bashword123";
+bool su = false;
 
 Transform *item;
 
@@ -36,6 +38,7 @@ void dotSlashCmD(char command[64]){
                     strcat(terminalOutput, "\r\nPICKED UP ");
                     strcat(terminalOutput, ENTITIES[i].name);
                     fprintf(myLog, "%s\n", terminalOutput);
+                    printf("\a");
                     break;
                 }
             }
@@ -57,12 +60,24 @@ void dotSlashCmD(char command[64]){
                 item->OnUse(item->useParam);
             }
         }else if(strcmp(progrm, "stats.sh")==0){
-            sprintf(terminalOutput, "\r\nHEATH = %d\r\nCURRENT ITEM = %s", health, item==NULL ? "[no_item_in_inventory]" : item->name);
+            sprintf(terminalOutput, "\r\nHEALTH = %d\r\nCURRENT ITEM = %s\r\nLEVEL_LOADED = %d", health, item==NULL ? "[no_item_in_inventory]" : item->name, LEVEL_LOADED);
+        }else if(strcmp(progrm, "inspect.sh")==0){
+            for(int i = 0; i < numEntities; i++){
+                if(ENTITIES[i].level == LEVEL_LOADED && ENTITIES[i].ALIVE && ENTITIES[i].isVisible){
+                    float distX = absolute(PLAYER->position.x - ENTITIES[i].position.x);
+                    float distY = absolute(PLAYER->position.y - ENTITIES[i].position.y);
+                    if(distX <= 1 && distY <= 1){
+                        char buf[128];
+                        sprintf(buf, "\r\nYou inspected [%s]. It looks like [%c] and you %s pick it up.", ENTITIES[i].name, ENTITIES[i].sprite, ENTITIES[i].tag == 2 ? "can" : "can't");
+                        strcat(terminalOutput, buf);
+                    }
+                }
+            }
         }else{
             sprintf(terminalOutput, "\r\ncannot find %s: no file or directory", progrm);
         }
     }else{
-        sprintf(terminalOutput, "Error, need to feed a program (i.e: pickup.sh, unlock.sh, drop.sh, ect...");
+        sprintf(terminalOutput, "Error, need to feed a program (i.e: pickup.sh, use.sh, drop.sh, ect...");
     }
 }
 
@@ -96,16 +111,35 @@ void LS(){
         }
     }
     sprintf(terminalOutput, "%s", buf);
-    strcat(terminalOutput, "\r\npickup.sh\tdrop.sh\t\tuse.sh\t\tstats.sh");
+    strcat(terminalOutput, "\r\npickup.sh\tdrop.sh\t\tuse.sh\t\tstats.sh\r\ninspect.sh");
 
 }
 
+void SU(){
+    if(su){
+        sprintf(terminalOutput, "Already root user\r\nAborting...");
+        return;
+    }
+    char pass[64];
+    printf("\r\nEnter password for ROOT: ");
+    scanf("%s", pass);
+    if(strcmp(pass, suPass)==0){
+        sprintf(terminalOutput, "\r\nSuccess! You are now ROOT user!");
+        su = true;
+    }else{
+        sprintf(terminalOutput, "\r\nIncorrect password for ROOT!\r\nExiting...");
+    }
+}
+
 void ProcessCommand(char command[32]){
+    fprintf(myLog, "PLAYER INPUTTED COMMAND [%s]\n", command);
     char cmd[32];
     cmd[0] = '\0';
     sscanf(command, "%s ", cmd);
     if(command[0]=='.' && command[1]=='/'){
         dotSlashCmD(command);
+    }else if(strcmp(cmd, "su")==0){
+        SU();
     }else if(strcmp(cmd, "ls")==0){
         LS();
     }else if(strcmp(cmd, "man") == 0){
@@ -122,16 +156,21 @@ void ProcessCommand(char command[32]){
                 sprintf(terminalOutput, "%s", man_echo);
             }else if(strcmp(buf, "jobs")==0){
                 sprintf(terminalOutput, "%s", man_jobs);
-            }else if(strcmp(buf, "kill")==0){
-                sprintf(terminalOutput, "%s", man_kill);
+            }else if(strcmp(buf, "exit")==0){
+                sprintf(terminalOutput, "%s", man_exit);
             }else if(strcmp(buf, "cd")==0){
                 sprintf(terminalOutput, "%s", man_cd);
             }else{
                 sprintf(terminalOutput, "Error : unregonized man [%s]", buf);
             }
         }
-    }else if(strcmp(cmd, "kill")==0){
-        
+    }else if(strcmp(cmd, "exit")==0){
+        if(!su){
+            sprintf(terminalOutput, "\r\nPermission Denied");
+        }else{
+            printf("Congragulations! You beat the game and exited the system!\r\nThanks for playing!");
+            END();
+        }
     }else if(strcmp(cmd, "jobs")==0){
         short cnt = 0;
         sprintf(terminalOutput, "\r\n");
@@ -183,6 +222,7 @@ void ProcessCommand(char command[32]){
     }else{
         printf("%s: command not found. use 'man' to see avaliable commands\nPress Enter to exit command mode", cmd);
         char c = getchar();
+        return;
     }
     
 }

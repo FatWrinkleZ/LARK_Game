@@ -8,3 +8,17 @@ CREATED ENTITY : [basics.scroll] with [6] Instance ID
 CREATED ENTITY : [lantern.light] with [7] Instance ID
 CREATED ENTITY : [.spike_lvl1.trap] with [8] Instance ID
 CREATED ENTITY : [You enter a dark room] with [9] Instance ID
+PLAYER INPUTTED COMMAND [./inspect.sh
+]
+PLAYER INPUTTED COMMAND [./inspect.sh
+]
+PLAYER INPUTTED COMMAND [./inspect.sh
+]
+PLAYER INPUTTED COMMAND [cd lvl2.level
+]
+PLAYER INPUTTED COMMAND [./inspect.sh
+]
+PLAYER INPUTTED COMMAND [su
+]
+PLAYER INPUTTED COMMAND [exit
+]
