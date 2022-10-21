@@ -1,6 +1,9 @@
 # LARK_Game
 L.A.R.K Game for Intro To Unix
 
+10/21/2022
+  Added lanterns, traps, scrolls, player damage and death.
+
 10/20/2022
   Entities render as a different color. They are now only visible within the view radius. Streamlined doors and keys (keys can work with doors not from their level). Streamlined triggers. Also I made a video a while ago, I just forgot to put it here. Here is the semi-current state of the game(about 2 updates back) https://www.youtube.com/watch?v=0QTwda36xbw. Also added some logic for a new item, the lamp, which highlights trap. Added a stats.sh program that displays player health and current item. And here is a free screenshot for how the game looks atm <br />
   ![Screenshot](Screenshots/screenshot_03.png "Screenshot")
