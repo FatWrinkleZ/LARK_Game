@@ -52,6 +52,7 @@ typedef struct{
     bool isJob;
     bool isFile;
     void (*OnUse)(void *);
+    void *useParam;
 }Transform;
 
 extern Transform* ENTITIES;

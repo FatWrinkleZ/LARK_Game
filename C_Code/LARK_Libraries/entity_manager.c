@@ -1,4 +1,7 @@
 #include "entity_manager.h"
+char scrollText1[512] = {
+    "\r\nThis is a scroll. They contain useful information to learn how to play the game.\r\nYou already know that if you walk over something, you can use './pickup.sh' to pick it up\r\nYou can also use './drop.sh' to drop it\r\nThere is also './use.sh' to use (but you already know that)"
+};
 
 Transform *ROOT;
 Transform *entity1;
@@ -6,6 +9,9 @@ Transform *entity2;
 Transform *entity3;
 Transform *entity4;
 Transform *trigger;
+Transform *scroll1;
+Transform *lantern;
+Transform *trap01;
 
 void LOG_ENTITIES(){
     for(int i = 0; i < numEntities; i++){
@@ -20,6 +26,7 @@ void ENTITY_SETUP(){
     PLAYER->rotation = PI/2;
     PLAYER->tag = PLAYER_TAG;
     PLAYER->sprite = '$';
+    PLAYER->OnUse = &ModifyHealth;
     sprintf(PLAYER->name, "PLAYER");
 
     entity1 = ADD_ENTITY();
@@ -29,7 +36,7 @@ void ENTITY_SETUP(){
     entity1->sprite = 'K';
     entity1->position.x = 55;
     entity1->position.y = 28;
-    entity1->tag = 2;
+    entity1->tag = PICKUP;
     entity1->level = 2;
     entity1->OnUse = &UseKey;
     sprintf(entity1->name, "1.key");
@@ -42,7 +49,7 @@ void ENTITY_SETUP(){
     entity2->position.x = 10;
     entity2->position.y = 10;
     entity2->sprite = 'K';
-    entity2->tag = 2;
+    entity2->tag = PICKUP;
     entity2->OnUse = &UseKey;
     sprintf(entity2->name, "2.key");
 
@@ -53,7 +60,7 @@ void ENTITY_SETUP(){
     entity3->position.x = 10;
     entity3->position.y = 26;
     entity3->isVisible = true;
-    entity3->tag = 3;
+    entity3->tag = DOOR;
     sprintf(entity3->name, "1.door");
 
     entity4 = ADD_ENTITY();
@@ -63,8 +70,45 @@ void ENTITY_SETUP(){
     entity4->position.x = 45;
     entity4->position.y = 17;
     entity4->isVisible = true;
-    entity4->tag = 3;
+    entity4->tag = DOOR;
     sprintf(entity4->name, "2.door");
+
+    scroll1 = ADD_ENTITY();
+    scroll1->isFile = true;
+    scroll1->isJob = false;
+    scroll1->isVisible = true;
+    scroll1->level = 1;
+    scroll1->position.x = 10;
+    scroll1->position.y = 12;
+    scroll1->sprite = '@';
+    scroll1->tag = PICKUP;
+    scroll1->OnUse = &WriteToTerminalOutput;
+    scroll1->useParam = &scrollText1;
+    sprintf(scroll1->name, "basics.scroll");
+
+    lantern = ADD_ENTITY();
+    lantern->isFile = true;
+    lantern->isJob = false;
+    lantern->isVisible = true;
+    lantern->level = 1;
+    lantern->position.x = 10;
+    lantern->position.y = 8;
+    lantern->sprite = '*';
+    lantern->tag = PICKUP;
+    lantern->OnUse = &UseLantern;
+    sprintf(lantern->name, "lantern.light");
+
+    trap01 = ADD_ENTITY();
+    trap01->isFile = false;
+    trap01->isJob = false;
+    trap01->isVisible = false;
+    trap01->level = 1;
+    trap01->position.x = 29;
+    trap01->position.y = 19;
+    trap01->sprite = 'T';
+    trap01->tag = TRAP;
+    trap01->OnUpdate = &TriggerTrap;
+    sprintf(trap01->name, ".spike_lvl1.trap");
 
     trigger = ADD_ENTITY();
     trigger->isFile = false;
@@ -73,7 +117,7 @@ void ENTITY_SETUP(){
     trigger->position.x = 22;
     trigger->position.y = 9;
     trigger->isVisible = false;
-    trigger->tag = 0;
+    trigger->tag = DEFAULT;
     trigger->OnUpdate = &TriggerUpdate;
     sprintf(trigger->name, "You enter a dark room");
 

@@ -93,6 +93,7 @@ void INIT(Transform* entity){
     entity->isFile = false;
     entity->isJob = true;
     entity->OnUse = NULL;
+    entity->useParam = entity;
 }
 
 void INIT_POS(Transform* entity, Vector2 position){
@@ -316,6 +317,11 @@ void RenderScreen(){
         putchar('\r');
         putchar('\n');
     }
+    //refreshing traps
+    for(int i = 0; i < numEntities; i++){
+        if(ENTITIES[i].tag == 4)
+            ENTITIES[i].isVisible = false;
+    }
     printf("~$ %s\r\n", terminalOutput);
 }
 
@@ -331,6 +337,7 @@ void END(){
     free(map);
     free(SCREEN);
     free(terminalOutput);
+    exit(0);
 }
 
 int Start(int _WIDTH, int _HEIGHT, void (*myStart)(), void (*OnUpdate)()){
@@ -344,7 +351,7 @@ int Start(int _WIDTH, int _HEIGHT, void (*myStart)(), void (*OnUpdate)()){
     HEIGHT = _HEIGHT;
     terminalOutput = (char*)malloc(sizeof(char)*512);
     int levelLoaded = LOAD_LEVEL("LEVELS/lvl1.level");
-    sprintf(terminalOutput, "Press (Esc) to enter command mode");
+    sprintf(terminalOutput, "WASD to move. Press (Esc) to enter command mode. './pickup.sh' when over an item to pick it up. './use.sh' can be used to use the item.\r\nWalk over to the scroll ('@') and pick it up. './use.sh' to read it.");
     if(levelLoaded == -1){
         system("/bin/stty cooked");
         printf("LEVEL NOT FOUND!\n");

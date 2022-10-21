@@ -18,7 +18,7 @@ void dotSlashCmD(char command[64]){
     if(sscanf(command, "./%s", progrm)>0){
         if(strcmp(progrm, "pickup.sh")==0){
             for(int i = 2; i < numEntities; i ++){
-                if((int)PLAYER->position.x==(int)ENTITIES[i].position.x && (int)PLAYER->position.y == (int)ENTITIES[i].position.y){
+                if(ENTITIES[i].tag = 2 && (int)PLAYER->position.x==(int)ENTITIES[i].position.x && (int)PLAYER->position.y == (int)ENTITIES[i].position.y){
                     if(item != NULL){
                         item->position.x = PLAYER->position.x;
                         item->position.y = PLAYER->position.y;
@@ -54,7 +54,7 @@ void dotSlashCmD(char command[64]){
             }
         }else if(strcmp(progrm, "use.sh")==0){
             if(item!=NULL && item->OnUse != NULL){
-                item->OnUse(item);
+                item->OnUse(item->useParam);
             }
         }else if(strcmp(progrm, "stats.sh")==0){
             sprintf(terminalOutput, "\r\nHEATH = %d\r\nCURRENT ITEM = %s", health, item==NULL ? "[no_item_in_inventory]" : item->name);
@@ -245,4 +245,12 @@ void OnPlayerUpdate(Transform* this){
         system("/bin/stty raw");
     }
     PLAYER->rotation = FixAng(PLAYER->rotation);
+}
+
+void ModifyHealth(float* hp){
+    health += *hp;
+    if(health<=0){
+        printf("\r\n\r\nYOU DIED\r\n\r\n\r\n");
+        END();
+    }
 }

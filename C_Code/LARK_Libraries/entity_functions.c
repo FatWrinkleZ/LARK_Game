@@ -23,6 +23,10 @@ void UseLantern(void){
             int mapToScreenPosY = (e->position.y-PLAYER->position.y) + HEIGHT/2;
             if(GET_BRIGHTNESS(mapToScreenPosX, mapToScreenPosY)!=' '){
                 SCREEN[mapToScreenPosX][mapToScreenPosY]=e->sprite;
+                e->isVisible = true;
+                char buf[64];
+                sprintf(buf, "\r\nFOUND [%s]", e->name);
+                strcat(terminalOutput, buf);
             }
         }
     }
@@ -48,4 +52,13 @@ void UseKey(Transform *key){
             }
         }
     }
+}
+
+void TriggerTrap(Transform *t){
+    if((int)t->position.x == (int)PLAYER->position.x && (int)t->position.y == (int)PLAYER->position.y){
+        float trapDMG = -15;
+        PLAYER->OnUse(&trapDMG);
+        sprintf(terminalOutput, "\r\nPLAYER STEPPED ON [%s], [%d] damage was done\r\nUse './stats.sh' to see current health", t->name, -15);
+    }
+    return;
 }

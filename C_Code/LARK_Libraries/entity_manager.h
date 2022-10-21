@@ -6,9 +6,12 @@
 enum TAGS{
     DEFAULT,
     PLAYER_TAG,
-    KEY,
+    PICKUP,
     DOOR,
+    TRAP
 };
+
+extern char scrollText1[512];
 
 extern Transform *ROOT;
 extern Transform *entity1;
@@ -16,6 +19,8 @@ extern Transform *entity2;
 extern Transform *entity3;
 extern Transform *entity4;
 extern Transform *trigger;
+extern Transform *scroll1;
+extern Transform *lantern;
 
 //logs all entities
 void LOG_ENTITIES();

@@ -4,4 +4,7 @@ CREATED ENTITY : [1.key] with [2] Instance ID
 CREATED ENTITY : [2.key] with [3] Instance ID
 CREATED ENTITY : [1.door] with [4] Instance ID
 CREATED ENTITY : [2.door] with [5] Instance ID
-CREATED ENTITY : [You enter a dark room] with [6] Instance ID
+CREATED ENTITY : [basics.scroll] with [6] Instance ID
+CREATED ENTITY : [lantern.light] with [7] Instance ID
+CREATED ENTITY : [.spike_lvl1.trap] with [8] Instance ID
+CREATED ENTITY : [You enter a dark room] with [9] Instance ID

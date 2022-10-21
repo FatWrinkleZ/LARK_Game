@@ -27,4 +27,7 @@ bool isASolidBlock(char c);
 //what the player does every update
 void OnPlayerUpdate(Transform* this);
 
+//used for damaging or restoring health
+void ModifyHealth(float* hp);
+
 #endif
