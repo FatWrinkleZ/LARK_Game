@@ -175,7 +175,7 @@ void ProcessCommand(char command[32]){
         short cnt = 0;
         sprintf(terminalOutput, "\r\n");
         for(int i = 0; i < numEntities; i++){
-            if(ENTITIES[i].isJob){
+            if(ENTITIES[i].isJob && ENTITIES[i].level == LEVEL_LOADED){
                 cnt++;
                 if(cnt %4==0)printf("\r\n");
                 char jid[12];
