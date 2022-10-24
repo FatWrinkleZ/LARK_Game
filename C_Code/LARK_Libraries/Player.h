@@ -35,6 +35,6 @@ bool isASolidBlock(char c);
 void OnPlayerUpdate(Transform* this);
 
 //used for damaging or restoring health
-void ModifyHealth(float* hp);
+void ModifyHealth(int* hp);
 
 #endif

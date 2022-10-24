@@ -21,6 +21,7 @@ extern Transform *entity4;
 extern Transform *trigger;
 extern Transform *scroll1;
 extern Transform *lantern;
+extern Transform *chest;
 
 //logs all entities
 void LOG_ENTITIES();

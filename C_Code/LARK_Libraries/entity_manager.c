@@ -12,6 +12,7 @@ Transform *trigger;
 Transform *scroll1;
 Transform *lantern;
 Transform *trap01;
+Transform *chest;
 
 void LOG_ENTITIES(){
     for(int i = 0; i < numEntities; i++){
@@ -39,6 +40,7 @@ void ENTITY_SETUP(){
     entity1->tag = PICKUP;
     entity1->level = 2;
     entity1->OnUse = &UseKey;
+    entity1->useParam = entity1;
     sprintf(entity1->name, "1.key");
 
     entity2 = ADD_ENTITY();
@@ -51,6 +53,7 @@ void ENTITY_SETUP(){
     entity2->sprite = 'K';
     entity2->tag = PICKUP;
     entity2->OnUse = &UseKey;
+    entity2->useParam = entity2;
     sprintf(entity2->name, "2.key");
 
     entity3 = ADD_ENTITY();
@@ -97,6 +100,18 @@ void ENTITY_SETUP(){
     lantern->tag = PICKUP;
     lantern->OnUse = &UseLantern;
     sprintf(lantern->name, "lantern.light");
+
+    chest = ADD_ENTITY();
+    chest->isFile = true;
+    chest->isJob = false;
+    chest->isVisible = true;
+    chest->level = 1;
+    chest->position.x = 11;
+    chest->position.y = 9;
+    chest->sprite = 'X';
+    chest->tag = DEFAULT;
+    chest->OnInteract = &OpenChest;
+    sprintf(chest->name, "chest.container");
 
     trap01 = ADD_ENTITY();
     trap01->isFile = false;

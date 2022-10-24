@@ -53,6 +53,7 @@ typedef struct{
     bool isFile;
     void (*OnUse)(void *);
     void *useParam;
+    void (*OnInteract)(void *);
 }Transform;
 
 extern Transform* ENTITIES;

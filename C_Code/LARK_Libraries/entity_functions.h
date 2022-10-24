@@ -22,4 +22,7 @@ void UseKey(Transform *key);
 //triggers trap and does damage if player walks over it
 void TriggerTrap(Transform* this);
 
+//Heals the player when they find and inspect a chest
+void OpenChest(Transform *t);
+
 #endif

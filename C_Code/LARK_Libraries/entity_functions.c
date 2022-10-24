@@ -62,3 +62,15 @@ void TriggerTrap(Transform *t){
     }
     return;
 }
+
+void OpenChest(Transform *t){
+    t->ALIVE = false;
+    t->isFile = false;
+    t->isJob = false;
+    t->isVisible = false;
+    char buf[128];
+    sprintf(buf, "\r\n %s You found a healing potion in [%s]. You drink it and regain 10 health %s \r\n",KGRN, t->name,KNRM);
+    strcat(terminalOutput, buf);
+    int hp = 10;
+    PLAYER->OnUse(&hp);
+}

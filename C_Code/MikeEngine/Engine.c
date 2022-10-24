@@ -94,13 +94,7 @@ void INIT(Transform* entity){
     entity->isJob = true;
     entity->OnUse = NULL;
     entity->useParam = entity;
-}
-
-void INIT_POS(Transform* entity, Vector2 position){
-    entity->position = position;
-    entity->tag = 0;
-    entity->rotation = 0.0f;
-    entity->OnUpdate = NULL;
+    entity->OnInteract = NULL;
 }
 
 Transform* ADD_ENTITY(){

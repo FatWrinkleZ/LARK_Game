@@ -70,6 +70,9 @@ void dotSlashCmD(char command[64]){
                         char buf[128];
                         sprintf(buf, "\r\nYou inspected [%s]. It looks like [%c] and you %s pick it up.", ENTITIES[i].name, ENTITIES[i].sprite, ENTITIES[i].tag == 2 ? "can" : "can't");
                         strcat(terminalOutput, buf);
+                        if(ENTITIES[i].OnInteract != NULL){
+                            ENTITIES[i].OnInteract(ENTITIES[i].useParam);
+                        }
                     }
                 }
             }
@@ -228,7 +231,7 @@ void ProcessCommand(char command[32]){
 }
 
 bool isASolidBlock(char c){
-    char BLOCKS[4] = {'#', '+', '-', '%'};
+    char BLOCKS[5] = {'#', '+', '-', '%','X'};
     int len = sizeof(BLOCKS)/sizeof(char);
     for(int i = 0; i < len;i++){
         if(c==BLOCKS[i]){
@@ -287,7 +290,7 @@ void OnPlayerUpdate(Transform* this){
     PLAYER->rotation = FixAng(PLAYER->rotation);
 }
 
-void ModifyHealth(float* hp){
+void ModifyHealth(int* hp){
     health += *hp;
     if(health<=0){
         printf("\r\n\r\nYOU DIED\r\n\r\n\r\n");
