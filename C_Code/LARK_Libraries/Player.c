@@ -9,7 +9,7 @@ int health = 100;
 float movementSpeed = 1.0f;
 float rotateSpeed = 3.0f;
 bool last_line_mode = false;
-char suPass[64]="Bashword123";
+char suPass[64]="TuxTorvalds1991";
 bool su = false;
 
 Transform *item;
@@ -267,7 +267,7 @@ void OnPlayerUpdate(Transform* this){
     case 27:
         last_line_mode = true;
     break;
-    case '0':
+    case 'q':
         SetPlaying(0);
         break;
     default:

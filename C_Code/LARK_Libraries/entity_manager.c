@@ -106,8 +106,8 @@ void ENTITY_SETUP(){
     chest->isJob = false;
     chest->isVisible = true;
     chest->level = 1;
-    chest->position.x = 11;
-    chest->position.y = 9;
+    chest->position.x = 34;
+    chest->position.y = 16;
     chest->sprite = 'X';
     chest->tag = DEFAULT;
     chest->OnInteract = &OpenChest;

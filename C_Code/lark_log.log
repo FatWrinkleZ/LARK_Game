@@ -9,11 +9,5 @@ CREATED ENTITY : [lantern.light] with [7] Instance ID
 CREATED ENTITY : [chest.container] with [8] Instance ID
 CREATED ENTITY : [.spike_lvl1.trap] with [9] Instance ID
 CREATED ENTITY : [You enter a dark room] with [10] Instance ID
-PLAYER INPUTTED COMMAND [./inspect.sh
-]
-PLAYER INPUTTED COMMAND [./stats.sh
-]
-PLAYER INPUTTED COMMAND [su
-]
-PLAYER INPUTTED COMMAND [exit
+PLAYER INPUTTED COMMAND [
 ]
