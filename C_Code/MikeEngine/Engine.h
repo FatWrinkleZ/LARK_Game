@@ -34,6 +34,12 @@ extern unsigned char *terminalOutput;
 
 extern char KEYSTROKE;
 
+typedef struct{
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
+}Pixel;
+
 typedef struct {
     float x, y;
 }Vector2;

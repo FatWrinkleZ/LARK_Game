@@ -9,5 +9,5 @@ CREATED ENTITY : [lantern.light] with [7] Instance ID
 CREATED ENTITY : [chest.container] with [8] Instance ID
 CREATED ENTITY : [.spike_lvl1.trap] with [9] Instance ID
 CREATED ENTITY : [You enter a dark room] with [10] Instance ID
-PLAYER INPUTTED COMMAND [
+PLAYER INPUTTED COMMAND [cd lvl3.level
 ]

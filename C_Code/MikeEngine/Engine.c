@@ -32,6 +32,7 @@ char GET_BRIGHTNESS(int posX, int posY){
 
 int LOAD_LEVEL(const char* filename){
     system("clear");
+    bool isBMP = false;
     FILE* file;
     file = fopen(filename, "r");
     if(file == NULL){sprintf(terminalOutput, "LEVEL [%s] NOT FOUND", filename);return -1;}
@@ -43,32 +44,79 @@ int LOAD_LEVEL(const char* filename){
         free(map);
     }
     fseek(file, 0, SEEK_SET);
-    
-    char buf[32];
-    buf[0] = '\0';
-    fscanf(file, "%[^\n]", buf);
-    sscanf(buf, "%d%d lvl%d", &mapX, &mapY, &LEVEL_LOADED);
-    //printf("FOUND FILE %d %d\r\n", mapX, mapY);
-    
-    map = (short**)malloc(sizeof(short*) * mapX);
-    for(int i = 0; i < mapX; i++){
-        map[i] = (short*)malloc(sizeof(short)*mapY);
+    char bmpStr[4];
+    bmpStr[0]='\0';
+    fread(bmpStr, 2, 1,file);
+    if(strcmp(bmpStr, "BM")==0){
+        isBMP=true;
+        printf("%s\n", bmpStr);
     }
-    fseek(file, 1, SEEK_CUR);
+    fseek(file, 0, SEEK_SET);
+    if(isBMP){
+        short pixelSize;
+        short startLoc;
 
-    char c = 1;
-    int x=0,y=0;
-    for(int i = mapY; i >= 0; i--){
-        for(int j = 0; j <= mapX; j++){
-            c = fgetc(file);
-            if(c=='#'||c==' '){
-                map[j][i] = (c=='#');
-                fprintf(stdout, "%c", c);
+        fseek(file, 10, SEEK_SET);
+        fread(&startLoc, 4, 1, file);
+        printf("Found start location [%d]\n", startLoc);
+
+        fseek(file, 18, SEEK_SET);
+        fread(&mapX, 4, 1, file);
+        printf("Found image width [%d]\n", mapX);
+
+        fseek(file, 22, SEEK_SET);
+        fread(&mapY, 4, 1, file);
+        printf("Found image height [%d]\n", mapY);
+
+        fseek(file , 28, SEEK_SET);
+        fread(&pixelSize, 2, 1, file);
+        printf("Found pixel size [%d] (bits)\n", pixelSize);
+
+        fseek(file, startLoc, SEEK_SET);
+        map = (short**)malloc(sizeof(short*)*mapX);
+        for(int i = 0; i < mapX; i ++){
+            map[i] = (short*)malloc(sizeof(short)*mapY);
+            for(int j = 0; j < mapY; j++){
+                Pixel lastCol;
+                fread(&lastCol, pixelSize/8, 1, file);
+                map[i][j] = (lastCol.r + lastCol.g + lastCol.b)/3 == 0;
             }
+            fseek(file, 2, SEEK_CUR);
         }
-        printf("\r\n");
+        for(int i = 0; i < mapY; i++){
+            for(int j = 0; j < mapX; j++){
+                putchar(map[j][i] ? '#':' ');
+            }
+            printf("\r\n");
+        }
+
+    }else{
+        char buf[32];
+        buf[0] = '\0';
+        fscanf(file, "%[^\n]", buf);
+        sscanf(buf, "%d%d lvl%d", &mapX, &mapY, &LEVEL_LOADED);
+        //printf("FOUND FILE %d %d\r\n", mapX, mapY);
+        
+        map = (short**)malloc(sizeof(short*) * mapX);
+        for(int i = 0; i < mapX; i++){
+            map[i] = (short*)malloc(sizeof(short)*mapY);
+        }
+        fseek(file, 1, SEEK_CUR);
+
+        char c = 1;
+        int x=0,y=0;
+        for(int i = mapY; i >= 0; i--){
+            for(int j = 0; j <= mapX; j++){
+                c = fgetc(file);
+                if(c=='#'||c==' '){
+                    map[j][i] = (c=='#');
+                    fprintf(stdout, "%c", c);
+                }
+            }
+            printf("\r\n");
+        }
     }
-    printf("FINISHED READING [%s] FILE\r\n", filename);
+    printf("FINISHED READING [%s] %s FILE\r\n", filename, isBMP==true ? "BMP" : "TEXT");
     printf("CONFIRM MAP (any key)\r\n");
     getchar();
     fclose(file);
