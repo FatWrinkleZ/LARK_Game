@@ -1,6 +1,10 @@
 # LARK_Game
 L.A.R.K Game for Intro To Unix
 
+10/24/2022
+  Added the ability to load bitmaps as levels. They must be uncompressed but any size will do. This took a fair bit of work but it is easier to make levels in the long run.
+  ![Screenshot](Screenshots/tuxPic.png "Screenshot")
+
 10/21/2022
   Added lanterns, traps, scrolls, player damage and death. 5 hours later I added su, exit(its how you win ;) ), and ./inspect.sh. inspect.sh will look at all adjacent tiles to the player and describe it if it is an entity.
 
