@@ -50,6 +50,7 @@ int LOAD_LEVEL(const char* filename){
     if(strcmp(bmpStr, "BM")==0){
         isBMP=true;
         printf("%s\n", bmpStr);
+        sscanf(filename, "LEVELS/lvl%d.", &LEVEL_LOADED);
     }
     fseek(file, 0, SEEK_SET);
     if(isBMP){
@@ -76,18 +77,17 @@ int LOAD_LEVEL(const char* filename){
         map = (short**)malloc(sizeof(short*)*mapX);
         for(int i = 0; i < mapX; i ++){
             map[i] = (short*)malloc(sizeof(short)*mapY);
-            for(int j = 0; j < mapY; j++){
-                Pixel lastCol;
-                fread(&lastCol, pixelSize/8, 1, file);
-                map[i][j] = (lastCol.r + lastCol.g + lastCol.b)/3 == 0;
-            }
-            fseek(file, 2, SEEK_CUR);
         }
         for(int i = 0; i < mapY; i++){
             for(int j = 0; j < mapX; j++){
-                putchar(map[j][i] ? '#':' ');
+                Pixel p;
+                fread(&p, pixelSize/8, 1, file);
+                map[j][i] = (p.r + p.g + p.g)/3 <= 128;
+
             }
-            printf("\r\n");
+            if((pixelSize/3) % 4 != 0){
+                fseek(file, 2, SEEK_CUR);
+            }
         }
 
     }else{
@@ -110,16 +110,21 @@ int LOAD_LEVEL(const char* filename){
                 c = fgetc(file);
                 if(c=='#'||c==' '){
                     map[j][i] = (c=='#');
-                    fprintf(stdout, "%c", c);
                 }
             }
-            printf("\r\n");
         }
+    }
+    fclose(file);
+    for(int i = mapY-1; i >= 0;i--){
+        for(int j = 0; j < mapX; j++){
+            putchar(map[j][i] ? '#':' ');
+        }
+        printf("\r\n");
     }
     printf("FINISHED READING [%s] %s FILE\r\n", filename, isBMP==true ? "BMP" : "TEXT");
     printf("CONFIRM MAP (any key)\r\n");
+    system("/bin/stty raw");
     getchar();
-    fclose(file);
     sprintf(terminalOutput, "LEVEL LOADED");
     return 0;
 }
