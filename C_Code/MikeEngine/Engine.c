@@ -121,7 +121,7 @@ int LOAD_LEVEL(const char* filename){
         }
         printf("\r\n");
     }
-    printf("FINISHED READING [%s] %s FILE\r\n", filename, isBMP==true ? "BMP" : "TEXT");
+    printf("FINISHED READING [%s] %s FILE\r\n", filename, ((isBMP==true) ? "BMP" : "TEXT"));
     printf("CONFIRM MAP (any key)\r\n");
     system("/bin/stty raw");
     getchar();
