@@ -98,10 +98,12 @@ void LS(){
     {
         while ((dir = readdir(d)) != NULL)
         {
-            strcat(buf, dir->d_name);
-            strcat(buf, "\t");
-            c++;
-            if(c %4 == 0)strcat(buf, "\r\n");
+            if(strstr(dir->d_name, ".secret")== NULL){
+                c++;
+                strcat(buf, dir->d_name);
+                strcat(buf, "\t");
+                if(c %4 == 0)strcat(buf, "\r\n");
+            }
         }
         closedir(d);
     }

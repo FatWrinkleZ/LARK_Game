@@ -1,7 +1,10 @@
 #include "entity_manager.h"
+
 char scrollText1[512] = {
     "\r\nThis is a scroll. They contain useful information to learn how to play the game.\r\nYou already know that if you walk over something, you can use './pickup.sh' to pick it up\r\nYou can also use './drop.sh' to drop it\r\nThere is also './use.sh' to use (but you already know that)"
 };
+
+char susText[24] = {"You are a sussy baka"};
 
 Transform *ROOT;
 Transform *entity1;
@@ -13,6 +16,8 @@ Transform *scroll1;
 Transform *lantern;
 Transform *trap01;
 Transform *chest;
+
+Transform *susScroll;
 
 void LOG_ENTITIES(){
     for(int i = 0; i < numEntities; i++){
@@ -55,6 +60,19 @@ void ENTITY_SETUP(){
     entity2->OnUse = &UseKey;
     entity2->useParam = entity2;
     sprintf(entity2->name, "2.key");
+
+    susScroll = ADD_ENTITY();
+    susScroll->isFile = false;
+    susScroll->isJob = false;
+    susScroll->isVisible= true;
+    susScroll->level = 69;
+    susScroll->sprite = '@';
+    susScroll->tag = PICKUP;
+    susScroll->OnUse = &WriteToTerminalOutput;
+    susScroll->useParam = &susText;
+    sprintf(susScroll->name, "sussy_scroll.scroll");
+    susScroll->position.x = 35;
+    susScroll->position.y = 20;
 
     entity3 = ADD_ENTITY();
     entity3->isFile = true;

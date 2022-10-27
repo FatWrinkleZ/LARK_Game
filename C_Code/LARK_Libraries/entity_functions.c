@@ -62,6 +62,15 @@ void TriggerTrap(Transform *t){
     }
     return;
 }
+void TriggerTrapOnce(Transform *t){
+    if(t->ALIVE && t->level == LEVEL_LOADED && (int)t->position.x == (int)PLAYER->position.x && (int)t->position.y == (int)PLAYER->position.y){
+        int trapDMG = -15;
+        PLAYER->OnUse(&trapDMG);
+        sprintf(terminalOutput, "\r\nPLAYER STEPPED ON [%s], [%d] damage was done\r\nUse './stats.sh' to see current health", t->name, -15);
+        t->ALIVE = false;
+    }
+    return;
+}
 
 void OpenChest(Transform *t){
     t->ALIVE = false;

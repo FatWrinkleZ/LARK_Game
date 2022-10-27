@@ -25,4 +25,7 @@ void TriggerTrap(Transform* this);
 //Heals the player when they find and inspect a chest
 void OpenChest(Transform *t);
 
+//triggers a trap and then disables itself
+void TriggerTrapOnce(Transform *t);
+
 #endif
