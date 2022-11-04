@@ -1,6 +1,9 @@
 # LARK_Game
 L.A.R.K Game for Intro To Unix
 
+11/4/2022
+  Fixed mega bug. keys now work as intended.
+
 11/3/2022
   Fixed teeny weeny bugs
 
