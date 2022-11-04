@@ -33,11 +33,14 @@ void UseLantern(void){
 }
 
 void UseKey(Transform *key){
+    fprintf(myLog, "CALLED UseKey(%s) => UnlockID : %c => LEVEL_LOADED : %d\n",key->name, key->name[0], LEVEL_LOADED);
     for(int i = 0; i < numEntities; i++){
+        fprintf(myLog, "\tFound Entitity [%s] in Level [%d] with TAG [%d]\n", ENTITIES[i].name, ENTITIES[i].level, ENTITIES[i].tag);
         if(ENTITIES[i].tag == 3 && ENTITIES[i].level == LEVEL_LOADED){
+            fprintf(myLog, "\t\tFound Door [%s] With UnlockID : %c\n", ENTITIES[i].name, ENTITIES[i].name[0]);
             float distX = absolute(PLAYER->position.x - ENTITIES[i].position.x);
             float distY = absolute(PLAYER->position.y - ENTITIES[i].position.y);
-            if(distX <= 1 && distY <= 1 && ENTITIES[i].name[0] == key->name[0]){
+            if(distX <= 1 && distY <= 1 && ENTITIES[i].name[0] == ENTITIES[key->instanceID].name[0]){
                 ENTITIES[i].isVisible = false;
                 ENTITIES[i].ALIVE = false;
                 ENTITIES[i].isJob = false;
