@@ -1,6 +1,9 @@
 # LARK_Game
 L.A.R.K Game for Intro To Unix
 
+11/3/2022
+  Fixed teeny weeny bugs
+
 10/25/2022
   (NOTE TO SELF : Remember to ask professor on how to use relative directory relative to file instead of working directory in order to fix LARK.sh)Added the ability to load bitmaps as levels. They must be uncompressed but any size will do. This took a fair bit of work but it is easier to make levels in the long run.
  </br> ![Screenshot](Screenshots/tuxPic.png "Screenshot")
