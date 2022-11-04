@@ -20,7 +20,7 @@ void dotSlashCmD(char command[64]){
     if(sscanf(command, "./%s", progrm)>0){
         if(strcmp(progrm, "pickup.sh")==0){
             for(int i = 2; i < numEntities; i ++){
-                if(ENTITIES[i].tag = 2 && (int)PLAYER->position.x==(int)ENTITIES[i].position.x && (int)PLAYER->position.y == (int)ENTITIES[i].position.y){
+                if(ENTITIES[i].tag = 2 && ENTITIES[i].isVisible &&(int)PLAYER->position.x==(int)ENTITIES[i].position.x && (int)PLAYER->position.y == (int)ENTITIES[i].position.y){
                     if(item != NULL){
                         item->position.x = PLAYER->position.x;
                         item->position.y = PLAYER->position.y;
@@ -31,10 +31,10 @@ void dotSlashCmD(char command[64]){
                         strcat(terminalOutput, "\r\nDROPPED ");
                         strcat(terminalOutput, item->name);
                     }
-                    ENTITIES[i].isFile = false;
-                    ENTITIES[i].isJob = false;
-                    ENTITIES[i].isVisible = false;
                     item = &ENTITIES[i];
+                    item->isFile = false;
+                    item->isJob = false;
+                    item->isVisible = false;
                     strcat(terminalOutput, "\r\nPICKED UP ");
                     strcat(terminalOutput, ENTITIES[i].name);
                     fprintf(myLog, "%s\n", terminalOutput);
