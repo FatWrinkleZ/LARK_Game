@@ -2,7 +2,7 @@
 #define ENGINE_MAN_H
 extern char man_ls[100];
 
-extern char man[64];
+extern char man[100];
 
 extern char man_cat[64];
 

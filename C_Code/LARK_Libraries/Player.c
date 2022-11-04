@@ -68,7 +68,7 @@ void dotSlashCmD(char command[64]){
                     float distY = absolute(PLAYER->position.y - ENTITIES[i].position.y);
                     if(distX <= 1 && distY <= 1){
                         char buf[128];
-                        sprintf(buf, "\r\nYou inspected [%s]. It looks like [%c] and you %s pick it up.", ENTITIES[i].name, ENTITIES[i].sprite, ENTITIES[i].tag == 2 ? "can" : "can't");
+                        sprintf(buf, "\r\nYou inspected [%s]. It looks like [%c] and you %s pick it up.", ENTITIES[i].name, ENTITIES[i].sprite, (ENTITIES[i].tag == 2) ? "can" : "can't");
                         strcat(terminalOutput, buf);
                         if(ENTITIES[i].OnInteract != NULL){
                             ENTITIES[i].OnInteract(ENTITIES[i].useParam);
