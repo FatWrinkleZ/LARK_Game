@@ -10,6 +10,9 @@ void TriggerUpdate(Transform* this);
 //just sets the terminal output to the given string
 void WriteToTerminalOutput(char* str);
 
+//adds given string to the terminal output
+void AddToTerminalOutput(char* str);
+
 //changes visibility of given transform to that of active bool
 void SetActive(Transform* t, bool active);
 

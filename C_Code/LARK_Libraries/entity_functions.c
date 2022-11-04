@@ -11,6 +11,10 @@ void WriteToTerminalOutput(char* str){
     sprintf(terminalOutput, "%s", str);
 }
 
+void AddToTerminalOutput(char* str){
+    strcat(terminalOutput, str);
+}
+
 void SetActive(Transform* t, bool active){
     t->ALIVE = active;
 }
