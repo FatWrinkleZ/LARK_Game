@@ -4,6 +4,8 @@ char scrollText1[512] = {
     "\r\nThis is a scroll. They contain useful information to learn how to play the game.\r\nYou already know that if you walk over something, you can use './pickup.sh' to pick it up\r\nYou can also use './drop.sh' to drop it\r\nThere is also './use.sh' to use (but you already know that)"
 };
 
+char glyphText1[64]="\tThe glyph reads : 'This is a glyph'";
+
 char susText[24] = {"You are a sussy baka"};
 
 Transform *ROOT;
@@ -16,6 +18,7 @@ Transform *scroll1;
 Transform *lantern;
 Transform *trap01;
 Transform *chest;
+Transform * glyph;
 
 Transform *susScroll;
 
@@ -60,6 +63,19 @@ void ENTITY_SETUP(){
     entity2->OnUse = &UseKey;
     entity2->useParam = entity2;
     sprintf(entity2->name, "2.key");
+
+    glyph = ADD_ENTITY();
+    glyph->isFile = true;
+    glyph->isJob = true;
+    glyph->isVisible = true;
+    glyph->level = 1;
+    glyph->position.x = 15;
+    glyph->position.y = 2;
+    glyph->sprite = 'X';
+    glyph->tag = DEFAULT;
+    glyph->OnInteract = &AddToTerminalOutput;
+    glyph->useParam = &glyphText1;
+    sprintf(glyph->name, "glyph1.glyph");
 
     susScroll = ADD_ENTITY();
     susScroll->isFile = false;

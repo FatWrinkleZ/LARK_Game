@@ -2,92 +2,14 @@ CREATED ENTITY : [ROOT] with [0] Instance ID
 CREATED ENTITY : [PLAYER] with [1] Instance ID
 CREATED ENTITY : [1.key] with [2] Instance ID
 CREATED ENTITY : [2.key] with [3] Instance ID
-CREATED ENTITY : [sussy_scroll.scroll] with [4] Instance ID
-CREATED ENTITY : [1.door] with [5] Instance ID
-CREATED ENTITY : [2.door] with [6] Instance ID
-CREATED ENTITY : [basics.scroll] with [7] Instance ID
-CREATED ENTITY : [lantern.light] with [8] Instance ID
-CREATED ENTITY : [chest.container] with [9] Instance ID
-CREATED ENTITY : [.spike_lvl1.trap] with [10] Instance ID
-CREATED ENTITY : [You enter a dark room] with [11] Instance ID
-PLAYER INPUTTED COMMAND [./pickup.sh
-]
-
-PICKED UP 2.key
-PLAYER INPUTTED COMMAND [cd theEntrance.level
-]
-PLAYER INPUTTED COMMAND [./use.sh
-]
-CALLED UseKey(2.key) => UnlockID : 2 => LEVEL_LOADED : 2
-	Found Entitity [ROOT] in Level [0] with TAG [0]
-	Found Entitity [PLAYER] in Level [1] with TAG [1]
-	Found Entitity [1.key] in Level [2] with TAG [2]
-	Found Entitity [2.key] in Level [1] with TAG [2]
-	Found Entitity [sussy_scroll.scroll] in Level [69] with TAG [2]
-	Found Entitity [1.door] in Level [1] with TAG [3]
-	Found Entitity [2.door] in Level [2] with TAG [3]
-		Found Door [2.door] With UnlockID : 2
-	Found Entitity [basics.scroll] in Level [1] with TAG [2]
-	Found Entitity [lantern.light] in Level [1] with TAG [2]
-	Found Entitity [chest.container] in Level [1] with TAG [0]
-	Found Entitity [.spike_lvl1.trap] in Level [1] with TAG [4]
-	Found Entitity [You enter a dark room] in Level [1] with TAG [0]
-PLAYER INPUTTED COMMAND [./pickup.sh
-]
-
-DROPPED 2.key
-PICKED UP 1.key
-PLAYER INPUTTED COMMAND [./stats.sh
-]
-PLAYER INPUTTED COMMAND [./pickup.sh
-]
-
-DROPPED 1.key
-PICKED UP 2.key
-PLAYER INPUTTED COMMAND [./stats.sh
-]
-PLAYER INPUTTED COMMAND [cd lvl1.level
-]
-PLAYER INPUTTED COMMAND [./use.sh
-]
-CALLED UseKey(2.key) => UnlockID : 2 => LEVEL_LOADED : 1
-	Found Entitity [ROOT] in Level [0] with TAG [0]
-	Found Entitity [PLAYER] in Level [1] with TAG [1]
-	Found Entitity [1.key] in Level [2] with TAG [2]
-	Found Entitity [2.key] in Level [2] with TAG [2]
-	Found Entitity [sussy_scroll.scroll] in Level [69] with TAG [2]
-	Found Entitity [1.door] in Level [1] with TAG [3]
-		Found Door [1.door] With UnlockID : 1
-	Found Entitity [2.door] in Level [2] with TAG [3]
-	Found Entitity [basics.scroll] in Level [1] with TAG [2]
-	Found Entitity [lantern.light] in Level [1] with TAG [2]
-	Found Entitity [chest.container] in Level [1] with TAG [0]
-	Found Entitity [.spike_lvl1.trap] in Level [1] with TAG [4]
-	Found Entitity [You enter a dark room] in Level [1] with TAG [0]
-PLAYER INPUTTED COMMAND [cd theEntrance.level
-]
-PLAYER INPUTTED COMMAND [./pickup.sh
-]
-
-DROPPED 2.key
-PICKED UP 1.key
-PLAYER INPUTTED COMMAND [cd lvl1.level
-]
-PLAYER INPUTTED COMMAND [./use.sh
-]
-CALLED UseKey(1.key) => UnlockID : 1 => LEVEL_LOADED : 1
-	Found Entitity [ROOT] in Level [0] with TAG [0]
-	Found Entitity [PLAYER] in Level [1] with TAG [1]
-	Found Entitity [1.key] in Level [2] with TAG [2]
-	Found Entitity [2.key] in Level [2] with TAG [2]
-	Found Entitity [sussy_scroll.scroll] in Level [69] with TAG [2]
-	Found Entitity [1.door] in Level [1] with TAG [3]
-		Found Door [1.door] With UnlockID : 1
-	Found Entitity [2.door] in Level [2] with TAG [3]
-	Found Entitity [basics.scroll] in Level [1] with TAG [2]
-	Found Entitity [lantern.light] in Level [1] with TAG [2]
-	Found Entitity [chest.container] in Level [1] with TAG [0]
-	Found Entitity [.spike_lvl1.trap] in Level [1] with TAG [4]
-	Found Entitity [You enter a dark room] in Level [1] with TAG [0]
-PLAYER INPUTTED COMMAND [
+CREATED ENTITY : [glyph1.glyph] with [4] Instance ID
+CREATED ENTITY : [sussy_scroll.scroll] with [5] Instance ID
+CREATED ENTITY : [1.door] with [6] Instance ID
+CREATED ENTITY : [2.door] with [7] Instance ID
+CREATED ENTITY : [basics.scroll] with [8] Instance ID
+CREATED ENTITY : [lantern.light] with [9] Instance ID
+CREATED ENTITY : [chest.container] with [10] Instance ID
+CREATED ENTITY : [.spike_lvl1.trap] with [11] Instance ID
+CREATED ENTITY : [You enter a dark room] with [12] Instance ID
+PLAYER INPUTTED COMMAND [./inspect.sh
 ]

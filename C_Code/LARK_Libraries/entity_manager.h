@@ -11,6 +11,7 @@ enum TAGS{
     TRAP
 };
 
+extern char glyphText1[64];
 extern char scrollText1[512];
 
 extern Transform *ROOT;
@@ -22,6 +23,7 @@ extern Transform *trigger;
 extern Transform *scroll1;
 extern Transform *lantern;
 extern Transform *chest;
+extern Transform *glyph;
 
 //logs all entities
 void LOG_ENTITIES();
