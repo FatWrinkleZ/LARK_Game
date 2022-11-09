@@ -32,7 +32,7 @@ void UseLantern(void){
                 e->isVisible = true;
                 char buf[64];
                 sprintf(buf, "\r\nFOUND [%s]", e->name);
-                strcat(terminalOutput, buf);
+                AddToTerminalOutput(buf);
             }
         }
     }
