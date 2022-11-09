@@ -24,7 +24,7 @@ void SetActive(Transform* t, bool active){
 void UseLantern(void){
     for(int i = 0; i < numEntities; i++){
         Transform* e = &ENTITIES[i];
-        if(e->level != LEVEL_LOADED || strstr(e->name, ".trap")){
+        if(e->level == LEVEL_LOADED && strstr(e->name, ".trap")){
             int mapToScreenPosX = (e->position.x-PLAYER->position.x) + WIDTH/2;
             int mapToScreenPosY = (e->position.y-PLAYER->position.y) + HEIGHT/2;
             if(GET_BRIGHTNESS(mapToScreenPosX, mapToScreenPosY)!=' '){
