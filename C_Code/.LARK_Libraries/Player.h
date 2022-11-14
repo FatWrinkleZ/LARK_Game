@@ -3,7 +3,7 @@
 #include "engine_man.h"
 #include <dirent.h>
 #include <stdbool.h>
-#include "../MikeEngine/Engine.h"
+#include "../.MikeEngine/Engine.h"
 
 extern int health;
 

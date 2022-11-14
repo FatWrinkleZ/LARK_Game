@@ -89,7 +89,7 @@ void LS(){
 
     struct dirent *dir;
 
-    d = opendir("LEVELS");
+    d = opendir(".LEVELS");
 
     char buf[512];
     buf[0] = '\0';
@@ -216,7 +216,7 @@ void ProcessCommand(char command[32]){
         if(sscanf(command, "cd %s", buf)>0){
             char lvl[64];
             lvl[0] = '\0';
-            strcat(lvl, "LEVELS/");
+            strcat(lvl, ".LEVELS/");
             strcat(lvl, buf);
             LOAD_LEVEL(lvl);
             PLAYER->position.x = mapX/2;

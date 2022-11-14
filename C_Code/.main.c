@@ -1,5 +1,5 @@
-#include "MikeEngine/Engine.h"
-#include "LARK_Libraries/entity_manager.h"
+#include ".MikeEngine/Engine.h"
+#include ".LARK_Libraries/entity_manager.h"
 
 int playing = 1;
 
