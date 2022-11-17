@@ -161,6 +161,7 @@ void ENTITY_SETUP(){
 
     trigger = ADD_ENTITY();
     trigger->isFile = false;
+    trigger->isJob = false;
     trigger->sprite = ' ';
     trigger->level = 1;
     trigger->position.x = 22;
