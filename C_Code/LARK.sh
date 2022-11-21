@@ -1,4 +1,9 @@
 #!/bin/bash
-echo "Welcome to the LARK Game"
-./.compile_game.sh && ./.LARK_GAME.out
+username=$(whoami)
+echo "Welcome $username, to the LARK Game"
+echo "Press 'enter' to start the game"
+read
+tput smcup
 
+./.compile_game.sh && ./.LARK_GAME.out
+tput rmcup
