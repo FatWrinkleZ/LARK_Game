@@ -1,7 +1,7 @@
 #include "entity_functions.h"
 
 void TriggerUpdate(Transform* this){
-    if(this->ALIVE && (int)this->position.x == (int)PLAYER->position.x && (int)this->position.y == (int)PLAYER->position.y){
+    if(LEVEL_LOADED == this->level && this->ALIVE && (int)this->position.x == (int)PLAYER->position.x && (int)this->position.y == (int)PLAYER->position.y){
         WriteToTerminalOutput(this->name);
         this->ALIVE = false;
     }
