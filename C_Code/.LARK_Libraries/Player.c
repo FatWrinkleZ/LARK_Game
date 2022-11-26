@@ -91,7 +91,7 @@ void LS(){
 
     d = opendir(".LEVELS");
 
-    char buf[512];
+    char buf[1024];
     buf[0] = '\0';
     int c = 0;
     if (d)

@@ -397,7 +397,7 @@ int Start(int _WIDTH, int _HEIGHT, void (*myStart)(), void (*OnUpdate)()){
     }
     WIDTH = _WIDTH;
     HEIGHT = _HEIGHT;
-    terminalOutput = (char*)malloc(sizeof(char)*512);
+    terminalOutput = (char*)malloc(sizeof(char)*1024);
     int levelLoaded = LOAD_LEVEL(".LEVELS/lvl1.level");
     sprintf(terminalOutput, "WASD to move. Press (Esc) to enter command mode. './pickup.sh' when over an item to pick it up. './use.sh' can be used to use the item.\r\nWalk over to the scroll ('@') and pick it up. './use.sh' to read it.");
     if(levelLoaded == -1){
