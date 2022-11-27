@@ -443,7 +443,7 @@ void ENTITY_SETUP(){
    key1lvl5-> tag = PICKUP; 
     key1lvl5->OnUse = &UseKey; 
     key1lvl5 -> useParam = key1lvl5; 
-    sprintf(key1lvl5->name,"3.key"); 
+    sprintf(key1lvl5->name,"9.key"); 
 
     //chest behind key level 5 
     chest1lvl5=ADD_ENTITY(); 
