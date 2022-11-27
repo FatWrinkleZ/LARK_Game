@@ -109,7 +109,7 @@ extern Transform* trap7lvl5;
 //level 6 
 extern char scroll1lvl6TEXT[72];
 extern char scroll2lvl6TEXT[64];
-extern char scroll3lvl6TEXT[24];
+extern char scroll3lvl6TEXT[48];
 extern char scroll4lvl6TEXT[48];
 extern char scroll5lvl6TEXT[72];
 extern char scroll6lvl6TEXT[24];

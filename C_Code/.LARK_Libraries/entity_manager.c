@@ -47,7 +47,7 @@ char scroll1lvl6TEXT[72]={"Explore The Caves To Uncover All The Scrolls Of Forbi
 
 char scroll2lvl6TEXT[64]={"Check out the most sane man in human history: level 70 secret"};
 
-char scroll3lvl6TEXT[24]={"WE NEED TO COOK: level 71 secret"};
+char scroll3lvl6TEXT[48]={"WE NEED TO COOK: level 71 secret"};
 
 char scroll4lvl6TEXT[48]={"Based. : Level 72 secret "};
 
