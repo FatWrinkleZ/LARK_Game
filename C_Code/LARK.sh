@@ -7,3 +7,4 @@ tput smcup
 
 ./.compile_game.sh && ./.LARK_GAME.out
 tput rmcup
+/bin/stty cooked
