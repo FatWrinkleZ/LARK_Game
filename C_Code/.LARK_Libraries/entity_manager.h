@@ -25,7 +25,7 @@ extern char glyphText0[256];
 extern char glyphText9[128];
 extern char glyphText8[256];
 //secret level things
-extern char glyphText10[512];
+extern char glyphText10[1024];
 extern char susText[24];
 
 extern Transform *ROOT;

@@ -37,7 +37,7 @@ char glyphText4[256]="\r\nYou find a vent on this corner. Thats odd...\r\nYou op
 char glyphText0[256]="\r\nThe writing on the wall reads 'Tux'\r\n...\r\nThats a little underwhelming.\r\nIt seems important though... Maybe the other doors have more answers\r\nI think there's nothing else to do here though... Maybe checking other levels out will help.";
 char glyphText9[128]="\r\nThis time the wall reads 'Torvalds'\r\nOne more door and all will be revealed";
 char glyphText8[256]="\r\nYou see a bunch of 0s and 1s but for some reason you can read it\r\nIt says '1991'\r\n'become su by combining your 3 passcodes and exit out'\r\nYou finally know what to do.";
-char glyphText10[512]="\r\nHey! Developer speaking here.\r\nOriginally this game started as a doom inspired game\r\nIt had the same first person view and we wanted to use it as a maze\r\nBut we had to change course when we realized it wasnt very fun\r\nWe went with top view because the debugger of the doom view looked like what youre playing right now :)\r\nThats all though so developer out! Thank you for playing our game <3";
+char glyphText10[1024]="\r\nHey! Developer speaking here.\r\nOriginally this game started as a doom inspired game\r\nIt had the same first person view and we wanted to use it as a maze\r\nBut we had to change course when we realized it wasnt very fun\r\nWe went with top view because the debugger of the doom view looked like what youre playing right now :)\r\nThats all though so developer out! Thank you for playing our game <3\0";
 
 char susText[24] = {"You are a sussy baka"};
 

@@ -12,7 +12,7 @@ void WriteToTerminalOutput(char* str){
 }
 
 void AddToTerminalOutput(char* str){
-    char buf[256];
+    char buf[1024];
     sprintf(buf, "\r\n %s %s %s", KWHT, str, KNRM);
     strcat(terminalOutput, buf);
 }

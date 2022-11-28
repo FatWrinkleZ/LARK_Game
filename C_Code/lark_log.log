@@ -15,7 +15,7 @@ CREATED ENTITY : ["We do a little trolling, it's called we do a little trolling.
 CREATED ENTITY : [Beautiful Smile] with [14] Instance ID
 CREATED ENTITY : [Indomitable Human Spirit] with [15] Instance ID
 CREATED ENTITY : [This seems to be part of a bigger picture. ] with [16] Instance ID
-CREATED ENTITY : [3.key] with [17] Instance ID
+CREATED ENTITY : [9.key] with [17] Instance ID
 CREATED ENTITY : [chest1lvl5.container] with [18] Instance ID
 CREATED ENTITY : [chest2lvl5.container] with [19] Instance ID
 CREATED ENTITY : [chest3lvl5.container] with [20] Instance ID
@@ -136,11 +136,7 @@ CREATED ENTITY : [chest2lvl3.container] with [129] Instance ID
 CREATED ENTITY : [chest3lvl3.container] with [130] Instance ID
 CREATED ENTITY : [chest4lvl3.container] with [131] Instance ID
 CREATED ENTITY : [lanternlvl3.light] with [132] Instance ID
-PLAYER INPUTTED COMMAND [ls
+PLAYER INPUTTED COMMAND [cd lvl1993.secret
 ]
 PLAYER INPUTTED COMMAND [./inspect.sh
-]
-PLAYER INPUTTED COMMAND [jobs
-]
-PLAYER INPUTTED COMMAND [
 ]
