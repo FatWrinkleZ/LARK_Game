@@ -1377,7 +1377,7 @@ void ENTITY_SETUP(){
     entity2->tag = PICKUP;
     entity2->OnUse = &UseKey;
     entity2->useParam = entity2;
-    sprintf(entity2->name, "99.key");
+    sprintf(entity2->name, "trl.key");
 
     entity3 = ADD_ENTITY();
     entity3->isFile = false;
@@ -1388,7 +1388,7 @@ void ENTITY_SETUP(){
     entity3->position.y = 26;
     entity3->isVisible = true;
     entity3->tag = DOOR;
-    sprintf(entity3->name, "99.door");
+    sprintf(entity3->name, "trl.door");
 
     //SECRET LEVELS 
     //SECRET STUFF
