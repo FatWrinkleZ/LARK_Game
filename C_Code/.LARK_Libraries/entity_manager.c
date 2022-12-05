@@ -1212,7 +1212,7 @@ void ENTITY_SETUP(){
     lantern2->isVisible = true;
     lantern2->level = 1;
     lantern2->position.x = 30;
-    lantern2->position.y = 3;
+    lantern2->position.y = 4;
     lantern2->sprite = '*';
     lantern2->tag = PICKUP;
     lantern2->OnUse = &UseLantern;
