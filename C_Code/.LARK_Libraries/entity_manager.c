@@ -1384,8 +1384,8 @@ void ENTITY_SETUP(){
     entity3->isJob = true;
     entity3->sprite = '%';
     entity3->level = 2;
-    entity3->position.x = 10;
-    entity3->position.y = 26;
+    entity3->position.x = 8;
+    entity3->position.y = 8;
     entity3->isVisible = true;
     entity3->tag = DOOR;
     sprintf(entity3->name, "trl.door");
