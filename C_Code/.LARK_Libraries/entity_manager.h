@@ -15,7 +15,7 @@ extern char scrollText1[512];
 extern char scrollText2[512];
 extern char scrollText3[32];
 extern char scrollText4[256];
-extern char scrollText5[512];
+extern char scrollText5[1024];
 extern char glyphText1[128];
 extern char glyphText2[512];
 extern char glyphText3[512];

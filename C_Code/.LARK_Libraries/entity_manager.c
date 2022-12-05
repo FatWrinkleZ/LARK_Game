@@ -14,8 +14,8 @@ char scrollText4[256] = {
     "You find a piece of paper... it feels like paper\r\n'I keep seeing bits and bites of penguins...'\r\nThere's no more writing.\r\nYou look at the back of the 'paper' and you read 'cd lvl4.secret'"
 };
 
-char scrollText5[512] = {
-    "You feel a stream of 0s and 1s coming into your brain.\r\nThe penguin speaks to you.\r\n'I am tux. As you can tell, you're trapped inside of a Linux computer.'\r\nYou feel welcome yet overwhelmed by their presence\r\n'You will need this key to get out of the simulation.'\r\n'Whenever you feel lost, keep going. Doors will open themselves to you.'\r\n'Theres a reason you don't see windows around here.'\r\nIt looks at you, waiting for you to pick up the key and get going."
+char scrollText5[1024] = {
+    "You feel a stream of 0s and 1s coming into your brain.\r\nThe penguin speaks to you.\r\n'I am tux. As you can tell, you're trapped inside of a Linux computer.'\r\nYou feel welcome yet overwhelmed by their presence\r\n'You will need this key to get out of the simulation.'\r\n'Whenever you feel lost, keep going. Doors will open themselves to you.'\r\n'Theres a reason you don't see windows around here.'\r\nIt looks at you, waiting for you to pick up the key and get going.(hint [cd lvl1.level] to get back to level 1)"
 };
 
 //Level 2 text

@@ -38,6 +38,8 @@ void dotSlashCmD(char command[64]){
                     strcat(terminalOutput, "\r\nPICKED UP ");
                     strcat(terminalOutput, ENTITIES[i].name);
                     fprintf(myLog, "%s\n", terminalOutput);
+                    fclose(myLog);
+                    myLog = fopen("lark_log.log", "a");
                     printf("\a");
                     break;
                 }
@@ -57,7 +59,14 @@ void dotSlashCmD(char command[64]){
             }
         }else if(strcmp(progrm, "use.sh")==0){
             if(item!=NULL && item->OnUse != NULL){
+                fprintf(myLog, "Player used [%s]\n",item->name);
+                fclose(myLog);
+                myLog = fopen("lark_log.log", "a");
                 item->OnUse(item->useParam);
+            }else if(item==NULL){
+                sprintf(terminalOutput, "\r\nLooks like there is nothing in your inventory. Walk over an item and use [./pickup.sh] to be able to use it\r\n");
+            }else if(item->OnUse==NULL){
+                sprintf(terminalOutput, "\r\nYou cannot use [%s]\r\n", item->name);
             }
         }else if(strcmp(progrm, "stats.sh")==0){
             sprintf(terminalOutput, "\r\nHEALTH = %d\r\nCURRENT ITEM = %s\r\nLEVEL_LOADED = %d", health, item==NULL ? "[no_item_in_inventory]" : item->name, LEVEL_LOADED);
@@ -91,6 +100,7 @@ void LS(){
 
     d = opendir(".LEVELS");
 
+    sprintf(terminalOutput, "\r\npickup.sh\tdrop.sh\t\tuse.sh\t\tstats.sh\r\ninspect.sh\r\n");
     char buf[1024];
     buf[0] = '\0';
     int c = 0;
@@ -115,8 +125,7 @@ void LS(){
             if(c %4 == 0)strcat(buf, "\r\n");
         }
     }
-    sprintf(terminalOutput, "%s", buf);
-    strcat(terminalOutput, "\r\npickup.sh\tdrop.sh\t\tuse.sh\t\tstats.sh\r\ninspect.sh");
+    strcat(terminalOutput,buf);
 
 }
 
