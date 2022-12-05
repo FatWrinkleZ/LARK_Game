@@ -385,6 +385,8 @@ void END(){
     free(map);
     free(SCREEN);
     free(terminalOutput);
+    printf("Press Enter to continue...\n");
+    char ex = getchar();
     exit(0);
 }
 
